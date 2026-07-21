@@ -1,0 +1,11 @@
+# 정상 DUT 결과를 흉내 낸 PASS
+PYTHONPATH=python /opt/anaconda3/bin/python3 python/run_verification.py --mode mock-pass
+
+# 검출 하나를 고의로 누락한 FAIL
+PYTHONPATH=python /opt/anaconda3/bin/python3 python/run_verification.py --mode mock-fail
+
+# START → BUSY → DONE 제어 흐름
+PYTHONPATH=python /opt/anaconda3/bin/python3 python/simulate_control.py --work-cycles 5
+
+# 전체 단위 테스트
+PYTHONPATH=python /opt/anaconda3/bin/python3 -m pytest -q

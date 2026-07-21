@@ -1,0 +1,43 @@
+project:
+  name: ppe_helmet_vest_detector
+  model_path: models/best.pt
+
+classes:
+  # 실제 best.pt의 model.names와 반드시 맞춰야 한다.
+  0: helmet
+  1: no_helmet
+  2: safety_vest
+  3: no_safety_vest
+
+preprocess:
+  camera_width: 960
+  camera_height: 540
+  inference_imgsz: 960
+  color_order: BGR_to_RGB
+  tensor_layout: NCHW
+  normalization: divide_by_255
+  letterbox_rule: TBD_MATCH_ULTRALYTICS_VERSION
+
+detection_compare:
+  confidence_threshold: 0.50
+  iou_threshold: 0.50
+  confidence_tolerance: 0.10
+
+fixed_point:
+  input_bits: 8
+  weight_bits: 8
+  accumulator_bits: 32
+  output_bits: 8
+  fractional_bits: 7
+  signed: true
+  rounding: nearest_away_from_zero
+  overflow: saturate
+
+hardware_interface:
+  bus: TBD_AXI_LITE_OR_STREAM
+  start_register_address: TBD
+  done_register_address: TBD
+  input_buffer_address: TBD
+  output_buffer_address: TBD
+  expected_latency_cycles: TBD
+

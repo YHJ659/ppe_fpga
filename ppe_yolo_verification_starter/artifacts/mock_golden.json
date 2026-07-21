@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "frames": [
+    {
+      "frame_id": "empty_site.jpg",
+      "width": 960,
+      "height": 540,
+      "detections": []
+    },
+    {
+      "frame_id": "worker_safe.jpg",
+      "width": 960,
+      "height": 540,
+      "detections": [
+        {
+          "class_id": 0,
+          "class_name": "helmet",
+          "confidence": 0.94,
+          "bbox_xyxy": [
+            410,
+            52,
+            505,
+            155
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "safety_vest",
+          "confidence": 0.91,
+          "bbox_xyxy": [
+            365,
+            145,
+            565,
+            450
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "worker_unsafe.jpg",
+      "width": 960,
+      "height": 540,
+      "detections": [
+        {
+          "class_id": 1,
+          "class_name": "no_helmet",
+          "confidence": 0.88,
+          "bbox_xyxy": [
+            180,
+            60,
+            265,
+            165
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "no_safety_vest",
+          "confidence": 0.84,
+          "bbox_xyxy": [
+            145,
+            155,
+            310,
+            445
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "two_workers.jpg",
+      "width": 960,
+      "height": 540,
+      "detections": [
+        {
+          "class_id": 0,
+          "class_name": "helmet",
+          "confidence": 0.92,
+          "bbox_xyxy": [
+            240,
+            48,
+            325,
+            145
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "safety_vest",
+          "confidence": 0.89,
+          "bbox_xyxy": [
+            205,
+            135,
+            360,
+            430
+          ]
+        },
+        {
+          "class_id": 1,
+          "class_name": "no_helmet",
+          "confidence": 0.81,
+          "bbox_xyxy": [
+            635,
+            70,
+            715,
+            165
+          ]
+        },
+        {
+          "class_id": 3,
+          "class_name": "no_safety_vest",
+          "confidence": 0.78,
+          "bbox_xyxy": [
+            600,
+            155,
+            760,
+            445
+          ]
+        }
+      ]
+    }
+  ]
+}
