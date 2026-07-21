@@ -4,7 +4,10 @@ from ultralytics import YOLO
 from thop import profile
 import torch
 
-# 경로는 수정하세요.
+# yolov8n.pt: COCO 데이터셋(일반 객체 80종)으로 사전학습된 YOLOv8n 원본 모델
+# best.pt: 같은 YOLOv8n 아키텍처를 저장소의 PPE 데이터셋(헬멧/조끼 등 10개 클래스)으로 재학습시킨 커스텀 모델
+# 가중치 파일 경로는 알아서 수정하세요.
+
 model = YOLO("best.pt")
 model.info(detailed=True)
 
