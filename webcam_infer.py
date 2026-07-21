@@ -4,7 +4,8 @@ from ultralytics import YOLO
 from thop import profile
 import torch
 
-model = YOLO("models/best.pt")
+# 경로는 수정하세요.
+model = YOLO("best.pt")
 model.info(detailed=True)
 
 dummy_input = torch.randn(1, 3, 960, 540)
