@@ -4,7 +4,7 @@ PPE monitoring AI Hardware Accelerator
 # detail spec
 FPGA 보드안 available DSP는 총 1248개
 
-960x540(544) + 150Mhz + 15fps ===> 필요 DSP 688개
+640x640 + 100Mhz + 15fps ===> 필요 DSP 약 769개
 
 software모델로 실행시 fps 출력 평균 6fps
 
