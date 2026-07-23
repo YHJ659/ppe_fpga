@@ -1,0 +1,2 @@
+현재 8×8 단일 채널 3×3 INT8 Conv RTL을 독립 Python 골든과 Vivado XSIM 출력으로 bit-exact 대조 검증했습니다.
+위치·부호·경계·랜덤 18개 테스트의 총 648개 출력을 비교했고 648/648 PASS했습니다. (AXI·전체 YOLO·KV260 보드 검증은 제외)
