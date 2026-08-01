@@ -1,0 +1,171 @@
+#include <ap_int.h>
+#include <hls_stream.h>
+#include <ap_axi_sdata.h>
+
+// --------------------------------------------------------
+// 1. 데이터 타입 및 규격 정의
+// --------------------------------------------------------
+typedef ap_int<8> data_t;    // 피처맵 및 가중치 (INT8 양자화)
+typedef ap_int<32> acc_t;    // MAC(곱셈누산) 결과 버퍼 (Overflow 방지)
+
+// AXI4-Stream 패킷: 64비트 버스 (INT8 데이터 8개가 한 번에 전송됨)
+typedef ap_axis<64, 0, 0, 0> axis_t; 
+
+#define FEAT_SIZE 40 // Feature Map 크기 (40x40)
+
+// --------------------------------------------------------
+// 2. SiLU 활성화 함수 LUT (Look-Up Table)
+// --------------------------------------------------------
+// INT8 입력(-128 ~ 127)을 받아 즉시 INT8 결과를 뱉는 ROM(BRAM)으로 합성됨
+const data_t silu_lut[256] = {
+    // 실제 양자화된 SiLU(x) 값들이 들어갈 자리. (Python 등에서 미리 계산하여 하드코딩)
+    0, 0, 0, /* ... 256개 값 ... */ 127
+};
+
+// --------------------------------------------------------
+// 3. 서브 연산 모듈: 1x1 Conv + SiLU
+// --------------------------------------------------------
+void conv1x1_silu(
+    data_t in_buf[], data_t out_buf[], const data_t weight[], const acc_t bias[], 
+    int in_ch, int out_ch, int offset_out
+) {
+    // Spatial Loop (40x40)
+    for (int h = 0; h < FEAT_SIZE; h++) {
+        for (int w = 0; w < FEAT_SIZE; w++) {
+            
+            // Output Channel Loop
+            for (int oc = 0; oc < out_ch; oc++) {
+                #pragma HLS PIPELINE II=1 // 병렬 파이프라인 합성의 핵심
+                
+                acc_t mac = bias[oc];
+                // Input Channel Loop (MAC 연산)
+                for (int ic = 0; ic < in_ch; ic++) {
+                    #pragma HLS UNROLL factor=8 // 8개 채널을 동시에 곱셈 (DSP 자원 활용)
+                    int in_idx = (ic * FEAT_SIZE * FEAT_SIZE) + (h * FEAT_SIZE) + w;
+                    int w_idx = (oc * in_ch) + ic;
+                    mac += in_buf[in_idx] * weight[w_idx];
+                }
+                
+                // Quantization Scale 적용 (Shift 연산으로 대체)
+                data_t q_val = (data_t)(mac >> 8); 
+                
+                // LUT를 통한 SiLU 적용 및 출력 버퍼에 저장
+                // offset_out을 통해 Concat 버퍼의 원하는 위치에 바로 꽂아 넣음!
+                int out_idx = ((offset_out + oc) * FEAT_SIZE * FEAT_SIZE) + (h * FEAT_SIZE) + w;
+                out_buf[out_idx] = silu_lut[(unsigned char)q_val];
+            }
+        }
+    }
+}
+
+// --------------------------------------------------------
+// 4. 서브 연산 모듈: 3x3 Conv (Bottleneck용)
+// --------------------------------------------------------
+void conv3x3_silu(
+    data_t in_buf[], data_t out_buf[], const data_t weight[], const acc_t bias[], 
+    int ch, int offset_in, int offset_out, bool add_shortcut
+) {
+    // Padding 1을 고려한 3x3 연산 
+    for (int h = 0; h < FEAT_SIZE; h++) {
+        for (int w = 0; w < FEAT_SIZE; w++) {
+            for (int oc = 0; oc < ch; oc++) {
+                #pragma HLS PIPELINE II=1
+                
+                acc_t mac = bias[oc];
+                for (int ic = 0; ic < ch; ic++) {
+                    for (int kh = -1; kh <= 1; kh++) {
+                        for (int kw = -1; kw <= 1; kw++) {
+                            int ph = h + kh;
+                            int pw = w + kw;
+                            // 패딩 처리 (범위 밖은 0)
+                            if (ph >= 0 && ph < FEAT_SIZE && pw >= 0 && pw < FEAT_SIZE) {
+                                int in_idx = ((offset_in + ic) * FEAT_SIZE * FEAT_SIZE) + (ph * FEAT_SIZE) + pw;
+                                int w_idx = (oc * ch * 9) + (ic * 9) + ((kh+1)*3) + (kw+1);
+                                mac += in_buf[in_idx] * weight[w_idx];
+                            }
+                        }
+                    }
+                }
+                data_t q_val = (data_t)(mac >> 8);
+                data_t act_val = silu_lut[(unsigned char)q_val];
+                
+                int out_idx = ((offset_out + oc) * FEAT_SIZE * FEAT_SIZE) + (h * FEAT_SIZE) + w;
+                
+                // Bottleneck의 Shortcut Add (잔차 연결) 처리
+                if (add_shortcut) {
+                    int shortcut_idx = ((offset_in + oc) * FEAT_SIZE * FEAT_SIZE) + (h * FEAT_SIZE) + w;
+                    out_buf[out_idx] = act_val + in_buf[shortcut_idx];
+                } else {
+                    out_buf[out_idx] = act_val;
+                }
+            }
+        }
+    }
+}
+
+// --------------------------------------------------------
+// 5. 최상위(Top) 모듈: model6_c2f_accel
+// --------------------------------------------------------
+void model6_c2f_accel(
+    hls::stream<axis_t> &in_stream,  // DMA에서 들어오는 데이터
+    hls::stream<axis_t> &out_stream  // DMA로 나가는 데이터
+) {
+    // AXI 인터페이스 프라그마 설정
+    #pragma HLS INTERFACE axis port=in_stream
+    #pragma HLS INTERFACE axis port=out_stream
+    #pragma HLS INTERFACE s_axilite port=return bundle=CTRL_BUS
+
+    // 온칩 메모리 (SRAM/BRAM) 선언
+    // concat_buf 하나에 모든 중간 과정을 저장하여 물리적인 데이터 이동을 없앰 (256채널 크기)
+    static data_t input_buf[128 * FEAT_SIZE * FEAT_SIZE];
+    static data_t concat_buf[256 * FEAT_SIZE * FEAT_SIZE]; 
+    static data_t output_buf[128 * FEAT_SIZE * FEAT_SIZE];
+
+    // BRAM을 다중 포트로 분할하여 병렬 접근 가능하게 함
+    #pragma HLS ARRAY_PARTITION variable=input_buf cyclic factor=8
+    #pragma HLS ARRAY_PARTITION variable=concat_buf cyclic factor=8
+
+    // 가중치 배열 (실제로는 AXI-Lite로 로드하거나 ROM으로 합성)
+    static data_t w_cv1[128*128], w_bn1_1[64*64*9], w_bn1_2[64*64*9];
+    static data_t w_bn2_1[64*64*9], w_bn2_2[64*64*9], w_cv2[128*256];
+    static acc_t  b_cv1[128], b_bn1_1[64], b_bn1_2[64];
+    static acc_t  b_bn2_1[64], b_bn2_2[64], b_cv2[128];
+
+    // [Step 1] DMA -> SRAM 입력 데이터 로드
+    for (int i = 0; i < (128 * FEAT_SIZE * FEAT_SIZE) / 8; i++) {
+        #pragma HLS PIPELINE II=1
+        axis_t pkt = in_stream.read();
+        // 64-bit 쪼개서 8개의 INT8 배열에 할당 (생략)
+    }
+
+    // [Step 2] CV1: 1x1 Conv (128ch -> 128ch) 
+    // 출력 결과를 concat_buf의 0~127 채널에 바로 저장 (이로써 Split이 자동으로 완료됨)
+    conv1x1_silu(input_buf, concat_buf, w_cv1, b_cv1, 128, 128, 0 /* offset_out */);
+
+    // [Step 3] Bottleneck 1
+    // 입력: concat_buf의 64~127 채널 (Split된 뒷부분) / 출력: 중간버퍼
+    static data_t temp_buf[64 * FEAT_SIZE * FEAT_SIZE];
+    conv3x3_silu(concat_buf, temp_buf, w_bn1_1, b_bn1_1, 64, 64 /* offset_in */, 0, false);
+    // 입력: temp_buf / 출력: concat_buf의 128~191 채널 (Shortcut Add 포함)
+    conv3x3_silu(temp_buf, concat_buf, w_bn1_2, b_bn1_2, 64, 0, 128 /* offset_out */, true);
+
+    // [Step 4] Bottleneck 2
+    // 입력: concat_buf의 128~191 채널 (BN1의 결과) / 출력: 중간버퍼
+    conv3x3_silu(concat_buf, temp_buf, w_bn2_1, b_bn2_1, 64, 128 /* offset_in */, 0, false);
+    // 입력: temp_buf / 출력: concat_buf의 192~255 채널 (Shortcut Add 포함)
+    conv3x3_silu(temp_buf, concat_buf, w_bn2_2, b_bn2_2, 64, 0, 192 /* offset_out */, true);
+
+    // [Step 5] CV2: 1x1 Conv (Concat -> 128ch)
+    // Concat은 이미 물리적으로 concat_buf(256채널)에 완성되어 있음! (Zero-cost)
+    conv1x1_silu(concat_buf, output_buf, w_cv2, b_cv2, 256, 128, 0);
+
+    // [Step 6] SRAM -> DMA 출력 데이터 전송
+    for (int i = 0; i < (128 * FEAT_SIZE * FEAT_SIZE) / 8; i++) {
+        #pragma HLS PIPELINE II=1
+        axis_t pkt;
+        // 8개의 INT8을 64-bit pkt.data로 합치는 로직 (생략)
+        if (i == ((128 * FEAT_SIZE * FEAT_SIZE) / 8) - 1) pkt.last = 1;
+        else pkt.last = 0;
+        out_stream.write(pkt);
+    }
+}
