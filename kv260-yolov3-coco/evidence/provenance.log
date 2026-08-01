@@ -1,0 +1,11 @@
+captured_utc=2026-07-30T07:58:36Z
+model_archive_md5
+ae417567b1462c7d5b6708285643f140  /home/ubuntu/kv260-yolo/assets/yolov3_coco_416_tf2-zcu102_zcu104_kv260-r2.5.0.tar.gz
+sha256
+b566a6a4bad3d552d819c3c4c9968f4a95bb05b4a71e34c6583b878137ecec0b  /home/ubuntu/kv260-yolo/assets/yolov3_coco_416_tf2-zcu102_zcu104_kv260-r2.5.0.tar.gz
+315a0c0ff6d901b0c79d63068aa9c70b26f45521ff4e11687fd39586cb111cb8  /home/ubuntu/kv260-yolo/models/yolov3_coco_416_tf2/yolov3_coco_416_tf2.xmodel
+65fc79e2f181d1ecbd7f2e2e7a0b1b8c3adceb929ca6e461caae9c01b6418c48  /home/ubuntu/kv260-yolo/models/yolov3_coco_416_tf2/yolov3_coco_416_tf2.prototxt
+85b465dc0f36c2bd3325accc64d2fcc7ac1022bc5d14cb14166e9878f5137a61  /home/ubuntu/kv260-yolo/assets/xlnx-firmware-kv260-benchmark-b4096_0.12-0xlnx2_arm64.deb
+container_images
+[xilinx/smartcam:2022.1] [xilinx/smartcam@sha256:da2e52629011aeec332152a0f468d3ff156917dba9b596cf6d0de958d5dc29d7] sha256:da2e52629011aeec332152a0f468d3ff156917dba9b596cf6d0de958d5dc29d7 arm64 555549358
+[kv260/yolov3-webcam:2.5] [kv260/yolov3-webcam@sha256:af51c4f954223f3780a4a4ff6433c0e24f51fab22027c096152b94b7777d3fac] sha256:af51c4f954223f3780a4a4ff6433c0e24f51fab22027c096152b94b7777d3fac arm64 565169640

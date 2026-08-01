@@ -1,0 +1,10 @@
+Loading Vitis AI YOLOv3 model: /work/models/yolov3_coco_416_tf2/yolov3_coco_416_tf2.xmodel
+Camera opened: /dev/video0 640x480 reported_fps=30
+frame=1 inference_ms=73.32 detections=2
+frame=10 inference_ms=72.71 detections=4
+frame=20 inference_ms=72.55 detections=1
+frame=30 inference_ms=72.40 detections=0
+frame=40 inference_ms=72.77 detections=1
+frame=50 inference_ms=72.46 detections=1
+frame=60 inference_ms=72.52 detections=0
+RESULT camera=/dev/video0 resolution=640x480 frames=60 total_detections=61 best_frame_detections=4 average_inference_ms=72.483 pipeline_fps=11.447

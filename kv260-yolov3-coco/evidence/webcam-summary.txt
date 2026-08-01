@@ -1,0 +1,8 @@
+model=/work/models/yolov3_coco_416_tf2/yolov3_coco_416_tf2.xmodel
+camera=/dev/video0
+resolution=640x480
+frames=60
+total_detections=61
+best_frame_detections=4
+average_inference_ms=72.483
+pipeline_fps=11.447

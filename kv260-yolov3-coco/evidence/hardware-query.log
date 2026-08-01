@@ -1,0 +1,46 @@
+captured_utc=2026-07-30T07:58:30Z
+                     Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
+
+                k24-starter-kits            XRT_FLAT                k24-starter-kits            XRT_FLAT               (0+0)                  -1
+           kv260-benchmark-b4096            XRT_FLAT           kv260-benchmark-b4096            XRT_FLAT               (0+0)                  0,
+                  kv260-smartcam            XRT_FLAT                  kv260-smartcam            XRT_FLAT               (0+0)                  -1
+                k26-starter-kits            XRT_FLAT                k26-starter-kits            XRT_FLAT               (0+0)                  -1
+vart_conf
+firmware: /lib/firmware/xilinx/kv260-benchmark-b4096/kv260-benchmark-b4096.xclbin
+xdputil_query
+{
+    "DPU IP Spec":{
+        "DPU Core Count":1,
+        "IP version":"v4.0.0",
+        "generation timestamp":"2022-05-14 14-30-00",
+        "git commit id":"4772d51",
+        "git commit time":2022051323,
+        "regmap":"1to1 version"
+    },
+    "VAI Version":{
+        "libvart-runner.so":"Xilinx vart-runner Version: 2.5.0-  2022-07-20-17:13:58 ",
+        "libvitis_ai_library-dpu_task.so":"Xilinx vitis_ai_library dpu_task Version: 2.5.0-  2022-07-15 16:21:46 [UTC] ",
+        "libxir.so":"Xilinx xir Version: xir- 2022-07-20-17:06:45",
+        "target_factory":"target-factory.2.5.0 d02dcb6041663dbc7ecbc0c6af9fafa087a789de"
+    },
+    "kernels":[
+        {
+            "DPU Arch":"DPUCZDX8G_ISA1_B4096",
+            "DPU Frequency (MHz)":300,
+            "IP Type":"DPU",
+            "Load Parallel":2,
+            "Load augmentation":"enable",
+            "Load minus mean":"disable",
+            "Save Parallel":2,
+            "XRT Frequency (MHz)":300,
+            "cu_addr":"0xa0010000",
+            "cu_handle":"0xaaaadeeeb9e0",
+            "cu_idx":0,
+            "cu_mask":1,
+            "cu_name":"DPUCZDX8G:DPUCZDX8G_1",
+            "device_id":0,
+            "fingerprint":"0x101000016010407",
+            "name":"DPU Core 0"
+        }
+    ]
+}
