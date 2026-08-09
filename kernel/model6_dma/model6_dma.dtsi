@@ -1,0 +1,6 @@
+/* Include this node under the PL AXI bus in the KV260 Linux device tree. */
+model6_dma: model6-dma@a0000000 {
+    compatible = "ppe,kv260-model6-dma-1.0";
+    reg = <0x0 0xa0000000 0x0 0x00080000>;
+    status = "okay";
+};

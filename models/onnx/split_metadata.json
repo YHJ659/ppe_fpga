@@ -1,0 +1,90 @@
+{
+  "model_layers": 23,
+  "hardware_layer": 6,
+  "pre_outputs": [
+    "fpga_feature",
+    "skip4"
+  ],
+  "post_inputs": [
+    "fpga_output",
+    "skip4"
+  ],
+  "pre_graph": [
+    {
+      "name": "image",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ],
+      "dtype": 1
+    },
+    {
+      "name": "fpga_feature",
+      "shape": [
+        1,
+        128,
+        40,
+        40
+      ],
+      "dtype": 1
+    },
+    {
+      "name": "skip4",
+      "shape": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "dtype": 1
+    }
+  ],
+  "post_graph": [
+    {
+      "name": "fpga_output",
+      "shape": [
+        1,
+        256,
+        40,
+        40
+      ],
+      "dtype": 1
+    },
+    {
+      "name": "skip4",
+      "shape": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "dtype": 1
+    },
+    {
+      "name": "prediction",
+      "shape": [
+        1,
+        14,
+        8400
+      ],
+      "dtype": 1
+    }
+  ],
+  "fpga_feature_shape": [
+    1,
+    128,
+    40,
+    40
+  ],
+  "fpga_output_shape": [
+    1,
+    256,
+    40,
+    40
+  ],
+  "skip_cross_boundary_indices": [
+    4
+  ]
+}
