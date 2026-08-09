@@ -9,6 +9,7 @@ KV260(XCK26)에서 돌린 결과와, 그렇게 되기까지 고친 것들을 모
 
 한 장짜리 보고서: [`docs/model6_수정보고서.pdf`](docs/model6_수정보고서.pdf)
 검증 수치 전문: [`results/verification.md`](results/verification.md)
+성능이 왜 이런지: [`docs/성능_분석.md`](docs/성능_분석.md)
 
 ---
 
@@ -17,9 +18,13 @@ KV260(XCK26)에서 돌린 결과와, 그렇게 되기까지 고친 것들을 모
 ```
 hw/
   build_fix2.tcl              Vivado BD 를 처음부터 세우는 스크립트 (수정 반영)
+  design_1_bd.tcl             위 스크립트가 만든 BD 를 export 한 것
   coe_stride4.py              파라미터 .coe 를 4칸 간격으로 재배치
   coe_addr4/                  그렇게 만든 .coe 15개 (바로 쓸 수 있음)
   ppe_fpga_yoo_fix4.bit       완성된 비트스트림
+  ppe_fpga_yoo_fix4.xsa       같은 빌드의 하드웨어 플랫폼
+  ppe_fpga_yoo_fix4.hwh       .xsa 에서 꺼낸 것 (편의용)
+  CHECKSUMS.md5               셋의 md5
 sw/
   run_model6.py               한 프레임 전송 + 검증용
   run_multi.py                비트스트림 1회 로드로 여러 프레임 연속
@@ -27,9 +32,39 @@ sw/
   sw_model0to5.py             model.0~5 -> HW 입력 생성
   sw_model7up.py              HW 출력 -> model.7~22 검증
   check_xsa.py                .xsa 의 미연결/주소 누락 점검
+  layers.py                   레이어별 소요 시간 측정
+  bench.py                    CPU 실효 처리량 측정
 docs/    보고서
 results/ 검증 수치
 ```
+
+### 파일 이름에 대해
+
+`build_fix2.tcl` 은 출력을 늘 **`ppe_fpga_yoo_fix2.*`** 로 씁니다. 같은 스크립트를
+여러 번 돌렸기 때문에, 어느 빌드인지 구분하려고 여기서는 **`fix4`** 로 이름만 바꿔
+담았습니다. `fix4` = 이 스크립트의 4번째 빌드이고, `.bit` / `.xsa` / `.hwh` 는
+**전부 같은 한 번의 빌드**에서 나온 것입니다.
+
+```
+.xsa 안에 들어 있는 .bit  = f9a1ed9865c139ec3d31abc67fde68ed
+같이 올린 .bit           = f9a1ed9865c139ec3d31abc67fde68ed   (동일 확인)
+```
+
+`ppe_fpga_yoo_3.xsa` 같은 이름은 **존재한 적 없습니다.**
+
+### .hwh 가 없어도 실행은 됩니다
+
+여기 스크립트들은 `.hwh` 를 읽지 않습니다.
+
+```python
+from pynq import Bitstream
+Bitstream(bitfile).download()      # PL 만 굽는다
+```
+
+`.hwh` 가 필요한 것은 PYNQ `Overlay()` 입니다. 그건 주소 맵을 파싱해 IP 객체를
+만들어 주는데, 여기서는 주소를 상수로 두고 raw MMIO 로 접근하므로 쓰지 않습니다.
+(`Overlay()` 를 쓰면 오히려 `.xclbin` 을 찾다가 실패합니다.)
+`.xsa` / `.hwh` 는 주소 맵 확인과 재빌드를 위해 넣어 둔 것입니다.
 
 **따로 준비해야 하는 것** — 용량과 소유 문제로 넣지 않았습니다.
 
@@ -120,9 +155,10 @@ for (h) for (w) { for (c) px.ch[c] = in[c][h][w]; in_s.write(px); }
 
 ## 팀에 확인 요청
 
-1. **BD 원본이 어느 브랜치에도 없습니다.** `.xpr` / `.bd` / BD tcl 이 버전 관리에
-   올라와 있지 않아, 여기 비트스트림은 `.hwh` 에서 역으로 재구성한
-   `build_fix2.tcl` 산물입니다. 원본을 올려 주세요.
+1. **팀 원본 BD 가 어느 브랜치에도 없습니다.** `.xpr` / `.bd` / BD tcl 이 버전 관리에
+   올라와 있지 않습니다. 여기 있는 `hw/design_1_bd.tcl` 은 **팀 원본이 아니라**,
+   `.hwh` 에서 역으로 재구성한 `build_fix2.tcl` 이 만들어낸 BD 를 export 한 것입니다.
+   원본을 올려 주세요. 둘을 대조해야 아래 2번을 확인할 수 있습니다.
 2. **위 BRAM 주소 문제가 원본 BD 에도 있는지 확인이 필요합니다.** HLS bram 포트를
    blk_mem_gen 에 직접 붙이면 어느 설계에서나 생깁니다. 합성 로그에서
    `MASTER_TYPE ... BRAM_CTRL` 경고를 찾아보시면 됩니다.
