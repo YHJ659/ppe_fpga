@@ -1,0 +1,442 @@
+root@kria:~/jupyter_notebooks/team_prj# python dump_hw_outputs_pynq.py \
+    --images  calib_out/valid_dataset/images/ \
+    --model   best.pt \
+    --calib   calib_params.json \
+    --out_dir calib_out/hw_outputs/ \
+    --force
+[INFO] 이미지 114장 발견.
+[INFO] S_in=0.03899177, S_cat=0.05533565
+[INFO] PYNQ DMA 버퍼 할당 중...
+[INFO] AFI 교정 중...
+[INFO] AP_CTRL 리셋 중...
+[INFO] concat scale 설정 중...
+[INFO] concat scale 5개 전부 반영됨.
+[INFO] HLS IP auto_restart 완료.
+[INFO] 모델 로드: best.pt
+  [  1/114] -1079-_png_jpg.rf.19092a3937930012f9fd9c1ce57f5a7b ... 완료 (50ms, 포화 0.0%)
+  [  2/114] -1429-_png_jpg.rf.78a7894e86c79d018d80fa86f4d000f8 ... 완료 (50ms, 포화 0.0%)
+  [  3/114] -1969-_png_jpg.rf.41dd58ed3ae83df95fb2417c679d581f ... 완료 (50ms, 포화 0.0%)
+  [  4/114] -1989-_png_jpg.rf.8cb3d6087bb86d08e693b4250fbf96e3 ... 완료 (50ms, 포화 0.0%)
+  [  5/114] -3154-_png_jpg.rf.f118da2b1c20afb78ff93dc7d558f42c ... 완료 (50ms, 포화 0.0%)
+  [  6/114] -3766-_png_jpg.rf.81ead992d4b8047ec7beb28b7532cf0a ... 완료 (50ms, 포화 0.0%)
+  [  7/114] 0 ... 완료 (50ms, 포화 0.0%)
+  [  8/114] 004424_jpg.rf.0470713b945b08839105cde711db62d9 ... 완료 (50ms, 포화 0.0%)
+  [  9/114] 005559_jpg.rf.5a5ab91289de227b286efca4418ff73d ... 완료 (50ms, 포화 0.0%)
+  [ 10/114] 00596_jpg.rf.d030c5d98b937d080d75db1c1b269a84 ... 완료 (50ms, 포화 0.0%)
+  [ 11/114] 02646_jpg.rf.5c93ba95bdc03808bcf872c7218ac5ef ... 완료 (50ms, 포화 0.0%)
+  [ 12/114] 1125_jpg.rf.2958d0a57630bdde8c3b5c6c560152af ... 완료 (50ms, 포화 0.0%)
+  [ 13/114] 172_jpg.rf.9385682a04a12b6043a2ea893d1f319a ... 완료 (50ms, 포화 0.0%)
+  [ 14/114] 2009_000277_jpg.rf.baccd85360fb8011e7c303066ceac286 ... 완료 (50ms, 포화 0.0%)
+  [ 15/114] 2009_000461_jpg.rf.43a28e2d6f1f9d399c92e18ccc9f0bf1 ... 완료 (50ms, 포화 0.0%)
+  [ 16/114] 2009_002778_jpg.rf.7c8977ed190a2ce4211ef58f66864066 ... 완료 (50ms, 포화 0.0%)
+  [ 17/114] 2009_003991_jpg.rf.c4fadb57b5579062cd4db5463ec3ba74 ... 완료 (50ms, 포화 0.0%)
+  [ 18/114] 2009_004100_jpg.rf.6eb0dc058fc0d307a6b0f7f579945e24 ... 완료 (50ms, 포화 0.0%)
+  [ 19/114] 4_jpg.rf.a937c41e1fc4d92e9e1f8c2d9efeb87d ... 완료 (50ms, 포화 0.0%)
+  [ 20/114] 518_jpg.rf.73999663994434126ac8b7ac5dbe6b52 ... 완료 (50ms, 포화 0.0%)
+  [ 21/114] 644_jpg.rf.39197521b9addbcfa9d3620d85004e2d ... 완료 (50ms, 포화 0.0%)
+  [ 22/114] 681_jpg.rf.7a0a7ef78f7dc01872cc3130dc3b354e ... 완료 (50ms, 포화 0.0%)
+  [ 23/114] 972_jpg.rf.4c6fac866e4928f3da7591fd2c26c2ac ... 완료 (50ms, 포화 0.0%)
+  [ 24/114] IMG_3093_mp4-22_jpg.rf.ea118a6046b21e9246efd53599dfdc41 ... 완료 (50ms, 포화 0.0%)
+  [ 25/114] IMG_3094_mp4-3_jpg.rf.65429c37fcf92b2ba8cfc9d2180051ef ... 완료 (50ms, 포화 0.0%)
+  [ 26/114] IMG_3100_mp4-1_jpg.rf.7b4a6df995ec2702dee6e7f8c5b47e14 ... 완료 (50ms, 포화 0.0%)
+  [ 27/114] IMG_3100_mp4-3_jpg.rf.f05ef399880b1ac30e900df4f2fbb3c0 ... 완료 (50ms, 포화 0.0%)
+  [ 28/114] IMG_3103_mp4-16_jpg.rf.d31a50c14cb25c823066fe63793f7792 ... 완료 (50ms, 포화 0.0%)
+  [ 29/114] IMG_3103_mp4-17_jpg.rf.3223d405c1b3657aa54e170e32c8fe52 ... 완료 (50ms, 포화 0.0%)
+  [ 30/114] IMG_3103_mp4-18_jpg.rf.39e564f01ba6048fc34853e99f3de11b ... 완료 (50ms, 포화 0.0%)
+  [ 31/114] IMG_3103_mp4-8_jpg.rf.d54ebee33e6fd97c282258aabc1e52d7 ... 완료 (50ms, 포화 0.0%)
+  [ 32/114] IMG_4921-2_mp4-122_jpg.rf.d27a983b805c273486c09e20f65a5a6b ... 완료 (50ms, 포화 0.0%)
+  [ 33/114] IMG_5024_mp4-8_jpg.rf.6b626854d6228eab4c341ddd5f8b5e46 ... 완료 (50ms, 포화 0.0%)
+  [ 34/114] IMG_9949-1-_mp4-20_jpg.rf.6ff2adfaf91058088d86084475d4d575 ... 완료 (50ms, 포화 0.0%)
+  [ 35/114] MariusConePic31_png_jpg.rf.1fd6fccfeef580e0e0061d78d5a248a4 ... 완료 (50ms, 포화 0.0%)
+  [ 36/114] Mask2_mov-11_jpg.rf.34ddcb1a619624541a2cca4400b7cd92 ... 완료 (50ms, 포화 0.0%)
+  [ 37/114] Mask2_mov-15_jpg.rf.026bd9a95154b1ead451a722a25ed130 ... 완료 (50ms, 포화 0.0%)
+  [ 38/114] Movie-on-10-31-22-at-10_08-AM_mov-13_jpg.rf.91dc3b79da617fb2e4321f27f48f21f4 ... 완료 (50ms, 포화 0.0%)
+  [ 39/114] Movie-on-10-31-22-at-10_08-AM_mov-22_jpg.rf.a02b881bb190fa4a30026a648d13d278 ... 완료 (50ms, 포화 0.0%)
+  [ 40/114] Movie-on-10-31-22-at-10_08-AM_mov-6_jpg.rf.344372295a53aaf103587c9714ec98f7 ... 완료 (50ms, 포화 0.0%)
+  [ 41/114] RPReplay_Final1667001201_MP4-454_jpg.rf.74024a799f518f9a6314ed301827eb1b ... 완료 (50ms, 포화 0.0%)
+  [ 42/114] YouTube_FreeStockFootage_People-wearing-face-mask_Empty-Street_Covid19-D_DbgrvhlGs-720p_mp4-66_jpg.rf.72af13fb1f20520e0d41547037ced88b ... 완료 (50ms, 포화 0.0%)
+  [ 43/114] airport_inside_0090_jpg.rf.663e21100a3c4bc66a41cceba5403e51 ... 완료 (50ms, 포화 0.0%)
+  [ 44/114] airport_inside_0115_jpg.rf.8277ce4e71886a343bfdb10ce7fb6d4a ... 완료 (50ms, 포화 0.0%)
+  [ 45/114] autox3_mp4-78_jpg.rf.dc5c00104c4cf733c2c06c820b82d338 ... 완료 (50ms, 포화 0.0%)
+  [ 46/114] autox4_mp4-63_jpg.rf.b0fab4fd2c947536a122d6f2e7cca895 ... 완료 (50ms, 포화 0.0%)
+  [ 47/114] autox4_mp4-72_jpg.rf.5e9c1836f027bf40eb8898e68f2efdeb ... 완료 (50ms, 포화 0.0%)
+  [ 48/114] casino_0448_jpg.rf.090df4137a5926092c541ee5c6918868 ... 완료 (50ms, 포화 0.0%)
+  [ 49/114] class1_077_jpg.rf.84c3583c1866262daeb1618b80e18df9 ... 완료 (50ms, 포화 0.0%)
+  [ 50/114] class1_206_jpg.rf.3988ff665e55e1cd9dbcd22c87be73d9 ... 완료 (50ms, 포화 0.0%)
+  [ 51/114] class1_267_jpg.rf.ab7a08d97aba5b0748e976df6e65700a ... 완료 (50ms, 포화 0.0%)
+  [ 52/114] construction-1-_mp4-147_jpg.rf.a9062a80b06ac796f7afb269e5f18c53 ... 완료 (50ms, 포화 0.0%)
+  [ 53/114] construction-1023-_jpg.rf.7b73352606fb1d79619d34031c07a232 ... 완료 (50ms, 포화 0.0%)
+  [ 54/114] construction-1027-_jpg.rf.e78f55761814a8726ea51993407957af ... 완료 (50ms, 포화 0.0%)
+  [ 55/114] construction-1037-_jpg.rf.c44151f7f28c4da9757409953b1bff55 ... 완료 (50ms, 포화 0.0%)
+  [ 56/114] construction-1114-_jpg.rf.69b25d38992eb6da67701a614f0a3f97 ... 완료 (50ms, 포화 0.0%)
+  [ 57/114] construction-196-_jpg.rf.f593da25134315b48b325fb42436a01a ... 완료 (50ms, 포화 0.0%)
+  [ 58/114] construction-2-_mp4-149_jpg.rf.c6d3939d4743a346de668a0ae05accbc ... 완료 (50ms, 포화 0.0%)
+  [ 59/114] construction-2-_mp4-38_jpg.rf.0bb63aba0a9ebe5a4741a6207e2e1902 ... 완료 (50ms, 포화 0.0%)
+  [ 60/114] construction-274-_jpg.rf.21181010ffb2b9ea429080ccd258e3ae ... 완료 (50ms, 포화 0.0%)
+  [ 61/114] construction-277-_jpg.rf.bf73a4edc7a1f7d412bc3267cbafcda7 ... 완료 (50ms, 포화 0.0%)
+  [ 62/114] construction-3-_mp4-219_jpg.rf.416dbf917b54d5895e2430fa0d6f1b66 ... 완료 (50ms, 포화 0.0%)
+  [ 63/114] construction-3-_mp4-21_jpg.rf.4fc9ff5afc8387b5c673a424781c527c ... 완료 (50ms, 포화 0.0%)
+  [ 64/114] construction-4-_mp4-20_jpg.rf.cb627b855fa08d83357febb83f6ad4bc ... 완료 (50ms, 포화 0.0%)
+  [ 65/114] construction-711-_jpg.rf.50a19be8c0ae3cd1a82cd543a9bb6a14 ... 완료 (50ms, 포화 0.0%)
+  [ 66/114] construction-823-_jpg.rf.640d8abfc7c7689d4a19e6aa00ac8984 ... 완료 (50ms, 포화 0.0%)
+  [ 67/114] construction-9-_jpg.rf.c2af6f04317b1ea7d6e2a84d776788a2 ... 완료 (50ms, 포화 0.0%)
+  [ 68/114] hospital-corridor_jpg.rf.bbac7f39a08bac2b0363ee9682bd86b2 ... 완료 (50ms, 포화 0.0%)
+  [ 69/114] img_08_jpg.rf.0f132a9c7ca6d12a8a9d1c4b3dbd54da ... 완료 (50ms, 포화 0.0%)
+  [ 70/114] mms_00684_jpg.rf.47567bbd99db89023296aad0b965ff02 ... 완료 (50ms, 포화 0.0%)
+  [ 71/114] ppe_0064_jpg.rf.f019b082d09af2750a81ef5ea3fcbc3e ... 완료 (50ms, 포화 0.0%)
+  [ 72/114] ppe_0355_jpg.rf.508753d5b708536eca53de192b927c61 ... 완료 (50ms, 포화 0.0%)
+  [ 73/114] ppe_0665_jpg.rf.1dad479f7f54b2a7127cf18ef74ffd85 ... 완료 (50ms, 포화 0.0%)
+  [ 74/114] ppe_1228_jpg.rf.29b714c415ea74df3160f56a603463a0 ... 완료 (50ms, 포화 0.0%)
+  [ 75/114] residential_jpg.rf.17181770c64333009b9101e1572c5112 ... 완료 (50ms, 포화 0.0%)
+  [ 76/114] shakespearebookshop_jpg.rf.9a14dbfdd07d9a0cc916cffef0194245 ... 완료 (50ms, 포화 0.0%)
+  [ 77/114] soooo_jpg.rf.5980d39f656b4d62672d2164173455e3 ... 완료 (50ms, 포화 0.0%)
+  [ 78/114] video_CDC-YOUTUBE_mp4-42_jpg.rf.bbc5cf2369c54126f61f0b1f71f77d8d ... 완료 (50ms, 포화 0.0%)
+  [ 79/114] youtube-118_jpg.rf.9dc8b46dfbac73d9e4f983964355d7ac ... 완료 (50ms, 포화 0.0%)
+  [ 80/114] youtube-179_jpg.rf.bab3fbda351095d3b9aaba8007e3aa87 ... 완료 (50ms, 포화 0.0%)
+  [ 81/114] youtube-194_jpg.rf.601da70a10e87c30c693ffbee53b17a7 ... 완료 (50ms, 포화 0.0%)
+  [ 82/114] youtube-200_jpg.rf.2c8aaf9fb58df4a3af442c293217d0c5 ... 완료 (50ms, 포화 0.0%)
+  [ 83/114] youtube-226_jpg.rf.dd9d045ca17155289bcebe722e8a86e9 ... 완료 (50ms, 포화 0.0%)
+  [ 84/114] youtube-226_jpg.rf.e6dcacf16dc2dbcfd29f6705b7c1a224 ... 완료 (50ms, 포화 0.0%)
+  [ 85/114] youtube-232_jpg.rf.f92f310106a11e01495ce8bfae0f9b5a ... 완료 (50ms, 포화 0.0%)
+  [ 86/114] youtube-255_jpg.rf.c5a9f8ed208cb72e1a700ba52dc2fdfa ... 완료 (50ms, 포화 0.0%)
+  [ 87/114] youtube-260_jpg.rf.76ba0c9fa66318daee5bea72b83b4cc5 ... 완료 (50ms, 포화 0.0%)
+  [ 88/114] youtube-267_jpg.rf.acd9b5f407f573eaa830029418345ad3 ... 완료 (50ms, 포화 0.0%)
+  [ 89/114] youtube-277_jpg.rf.1bda1581c28b4f6cccd5eda6b23b94ee ... 완료 (50ms, 포화 0.0%)
+  [ 90/114] youtube-287_jpg.rf.c9a7d5b17f75d0c9ed62ad4127141aa2 ... 완료 (50ms, 포화 0.0%)
+  [ 91/114] youtube-308_jpg.rf.790ae393e769f8e6280734b7506523ab ... 완료 (50ms, 포화 0.0%)
+  [ 92/114] youtube-342_jpg.rf.d7e55a17800f8d87313d7b6f33256ea9 ... 완료 (50ms, 포화 0.0%)
+  [ 93/114] youtube-367_jpg.rf.fab8b016cb63c0928f40849db44ee98d ... 완료 (50ms, 포화 0.0%)
+  [ 94/114] youtube-391_jpg.rf.2744ad86e8dbd4366f1fa839accc48b3 ... 완료 (50ms, 포화 0.0%)
+  [ 95/114] youtube-392_jpg.rf.7e49e3a8486caaa4e9d82246de93e68e ... 완료 (50ms, 포화 0.0%)
+  [ 96/114] youtube-399_jpg.rf.3472ef7c01bb9092da48f0d562581121 ... 완료 (50ms, 포화 0.0%)
+  [ 97/114] youtube-405_jpg.rf.6d1fc463659ac0d8e735bc1e731086a0 ... 완료 (50ms, 포화 0.0%)
+  [ 98/114] youtube-416_jpg.rf.8b5d7c27337f84a1cd2b3e8b7c6435a7 ... 완료 (50ms, 포화 0.0%)
+  [ 99/114] youtube-446_jpg.rf.b9d9b80538b79252761946ece0bc6317 ... 완료 (50ms, 포화 0.0%)
+  [100/114] youtube-455_jpg.rf.35acd2e91608806a26f3ac4e784ea512 ... 완료 (50ms, 포화 0.0%)
+  [101/114] youtube-470_jpg.rf.6aebf4cfb6c5a7e703c6532ca5090517 ... 완료 (50ms, 포화 0.0%)
+  [102/114] youtube-476_jpg.rf.3744f21a7b74ea642bbcbc8251659001 ... 완료 (50ms, 포화 0.0%)
+  [103/114] youtube-487_jpg.rf.5f1c67ece433c16da8ed3c9200ef4b5f ... 완료 (50ms, 포화 0.0%)
+  [104/114] youtube-504_jpg.rf.23771986686856ac7d350cea84ddf611 ... 완료 (50ms, 포화 0.0%)
+  [105/114] youtube-51_jpg.rf.083f4487f9a468d9ff42aa13953f377a ... 완료 (50ms, 포화 0.0%)
+  [106/114] youtube-540_jpg.rf.b229e14d526db6e53965f59e6146cf15 ... 완료 (50ms, 포화 0.0%)
+  [107/114] youtube-584_jpg.rf.3136186a0786384c1ffc261f4d40ea42 ... 완료 (50ms, 포화 0.0%)
+  [108/114] youtube-617_jpg.rf.309ef116f1d9074886d61bb0816b6b9e ... 완료 (50ms, 포화 0.0%)
+  [109/114] youtube-619_jpg.rf.93749f0e33b2f7beb302dd2e176d768a ... 완료 (50ms, 포화 0.0%)
+  [110/114] youtube-697_jpg.rf.950b34f23e196850ec51a4add2eeb840 ... 완료 (50ms, 포화 0.0%)
+  [111/114] youtube-70_jpg.rf.2d5f69c78f062dfc572ccb6ce6bc3c9b ... 완료 (50ms, 포화 0.0%)
+  [112/114] youtube-727_jpg.rf.cb4c039b4ffea84835e67e2e3d2edf6e ... 완료 (50ms, 포화 0.0%)
+  [113/114] youtube-804_jpg.rf.c4250b3c54e1cca8d58622970882f60a ... 완료 (50ms, 포화 0.0%)
+  [114/114] youtube-836_jpg.rf.df6fc9e569e7b6b850ecb75c37781d10 ... 완료 (50ms, 포화 0.0%)
+
+==================================================
+  완료 114장 / 건너뜀 0장 / 실패 0장
+  총 소요 260.1초 (이미지당 평균 2282ms)
+  출력: /root/jupyter_notebooks/team_prj/calib_out/hw_outputs
+==================================================
+root@kria:~/jupyter_notebooks/team_prj# python eval_detection_gap.py \
+    --images  calib_out/valid_dataset/images/ \
+    --hw_bins calib_out/hw_outputs/ \
+    --model   best.pt \
+    --calib   calib_params.json \
+    --out_dir eval_out/ \
+    --hw_c    256
+[INFO] 이미지 114장 발견.
+[INFO] S_cat (역양자화 스케일) = 0.055336
+[INFO] 모델 로드: best.pt
+  [  1/114] -1079-_png_jpg.rf.19092a3937930012f9fd9c1ce57f5a7b → ref=4 hw=0 matched=0 FN=4 FP=0 FN_unsafe=0
+  [  2/114] -1429-_png_jpg.rf.78a7894e86c79d018d80fa86f4d000f8 → ref=7 hw=6 matched=0 FN=7 FP=6 FN_unsafe=0
+  [  3/114] -1969-_png_jpg.rf.41dd58ed3ae83df95fb2417c679d581f → ref=4 hw=4 matched=1 FN=3 FP=3 FN_unsafe=0
+  [  4/114] -1989-_png_jpg.rf.8cb3d6087bb86d08e693b4250fbf96e3 → ref=17 hw=17 matched=3 FN=14 FP=14 FN_unsafe=0
+  [  5/114] -3154-_png_jpg.rf.f118da2b1c20afb78ff93dc7d558f42c → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [  6/114] -3766-_png_jpg.rf.81ead992d4b8047ec7beb28b7532cf0a → ref=54 hw=50 matched=12 FN=42 FP=38 FN_unsafe=0
+  [  7/114] 0 → ref=9 hw=10 matched=2 FN=7 FP=8 FN_unsafe=0
+  [  8/114] 004424_jpg.rf.0470713b945b08839105cde711db62d9 → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [  9/114] 005559_jpg.rf.5a5ab91289de227b286efca4418ff73d → ref=6 hw=7 matched=0 FN=6 FP=7 FN_unsafe=0
+  [ 10/114] 00596_jpg.rf.d030c5d98b937d080d75db1c1b269a84 → ref=13 hw=12 matched=4 FN=9 FP=8 FN_unsafe=0
+  [ 11/114] 02646_jpg.rf.5c93ba95bdc03808bcf872c7218ac5ef → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [ 12/114] 1125_jpg.rf.2958d0a57630bdde8c3b5c6c560152af → ref=11 hw=8 matched=1 FN=10 FP=7 FN_unsafe=0
+  [ 13/114] 172_jpg.rf.9385682a04a12b6043a2ea893d1f319a → ref=6 hw=5 matched=0 FN=6 FP=5 FN_unsafe=0
+  [ 14/114] 2009_000277_jpg.rf.baccd85360fb8011e7c303066ceac286 → ref=3 hw=5 matched=1 FN=2 FP=4 FN_unsafe=0
+  [ 15/114] 2009_000461_jpg.rf.43a28e2d6f1f9d399c92e18ccc9f0bf1 → ref=4 hw=4 matched=1 FN=3 FP=3 FN_unsafe=0
+  [ 16/114] 2009_002778_jpg.rf.7c8977ed190a2ce4211ef58f66864066 → ref=2 hw=1 matched=0 FN=2 FP=1 FN_unsafe=0
+  [ 17/114] 2009_003991_jpg.rf.c4fadb57b5579062cd4db5463ec3ba74 → ref=5 hw=3 matched=0 FN=5 FP=3 FN_unsafe=0
+  [ 18/114] 2009_004100_jpg.rf.6eb0dc058fc0d307a6b0f7f579945e24 → ref=4 hw=5 matched=2 FN=2 FP=3 FN_unsafe=0
+  [ 19/114] 4_jpg.rf.a937c41e1fc4d92e9e1f8c2d9efeb87d → ref=8 hw=6 matched=2 FN=6 FP=4 FN_unsafe=0
+  [ 20/114] 518_jpg.rf.73999663994434126ac8b7ac5dbe6b52 → ref=5 hw=5 matched=0 FN=5 FP=5 FN_unsafe=0
+  [ 21/114] 644_jpg.rf.39197521b9addbcfa9d3620d85004e2d → ref=5 hw=5 matched=0 FN=5 FP=5 FN_unsafe=0
+  [ 22/114] 681_jpg.rf.7a0a7ef78f7dc01872cc3130dc3b354e → ref=5 hw=4 matched=0 FN=5 FP=4 FN_unsafe=0
+  [ 23/114] 972_jpg.rf.4c6fac866e4928f3da7591fd2c26c2ac → ref=5 hw=4 matched=0 FN=5 FP=4 FN_unsafe=0
+  [ 24/114] IMG_3093_mp4-22_jpg.rf.ea118a6046b21e9246efd53599dfdc41 → ref=4 hw=4 matched=2 FN=2 FP=2 FN_unsafe=0
+  [ 25/114] IMG_3094_mp4-3_jpg.rf.65429c37fcf92b2ba8cfc9d2180051ef → ref=4 hw=4 matched=2 FN=2 FP=2 FN_unsafe=0
+  [ 26/114] IMG_3100_mp4-1_jpg.rf.7b4a6df995ec2702dee6e7f8c5b47e14 → ref=4 hw=6 matched=2 FN=2 FP=4 FN_unsafe=0
+  [ 27/114] IMG_3100_mp4-3_jpg.rf.f05ef399880b1ac30e900df4f2fbb3c0 → ref=4 hw=5 matched=2 FN=2 FP=3 FN_unsafe=0
+  [ 28/114] IMG_3103_mp4-16_jpg.rf.d31a50c14cb25c823066fe63793f7792 → ref=4 hw=6 matched=2 FN=2 FP=4 FN_unsafe=0
+  [ 29/114] IMG_3103_mp4-17_jpg.rf.3223d405c1b3657aa54e170e32c8fe52 → ref=4 hw=6 matched=3 FN=1 FP=3 FN_unsafe=0
+  [ 30/114] IMG_3103_mp4-18_jpg.rf.39e564f01ba6048fc34853e99f3de11b → ref=4 hw=6 matched=2 FN=2 FP=4 FN_unsafe=0
+  [ 31/114] IMG_3103_mp4-8_jpg.rf.d54ebee33e6fd97c282258aabc1e52d7 → ref=3 hw=3 matched=2 FN=1 FP=1 FN_unsafe=0
+  [ 32/114] IMG_4921-2_mp4-122_jpg.rf.d27a983b805c273486c09e20f65a5a6b → ref=4 hw=5 matched=2 FN=2 FP=3 FN_unsafe=0
+  [ 33/114] IMG_5024_mp4-8_jpg.rf.6b626854d6228eab4c341ddd5f8b5e46 → ref=4 hw=4 matched=2 FN=2 FP=2 FN_unsafe=0
+  [ 34/114] IMG_9949-1-_mp4-20_jpg.rf.6ff2adfaf91058088d86084475d4d575 → ref=4 hw=7 matched=2 FN=2 FP=5 FN_unsafe=0
+  [ 35/114] MariusConePic31_png_jpg.rf.1fd6fccfeef580e0e0061d78d5a248a4 → ref=6 hw=6 matched=0 FN=6 FP=6 FN_unsafe=0
+  [ 36/114] Mask2_mov-11_jpg.rf.34ddcb1a619624541a2cca4400b7cd92 → ref=5 hw=8 matched=2 FN=3 FP=6 FN_unsafe=0
+  [ 37/114] Mask2_mov-15_jpg.rf.026bd9a95154b1ead451a722a25ed130 → ref=4 hw=8 matched=2 FN=2 FP=6 FN_unsafe=0
+  [ 38/114] Movie-on-10-31-22-at-10_08-AM_mov-13_jpg.rf.91dc3b79da617fb2e4321f27f48f21f4 → ref=4 hw=4 matched=1 FN=3 FP=3 FN_unsafe=0
+  [ 39/114] Movie-on-10-31-22-at-10_08-AM_mov-22_jpg.rf.a02b881bb190fa4a30026a648d13d278 → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [ 40/114] Movie-on-10-31-22-at-10_08-AM_mov-6_jpg.rf.344372295a53aaf103587c9714ec98f7 → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [ 41/114] RPReplay_Final1667001201_MP4-454_jpg.rf.74024a799f518f9a6314ed301827eb1b → ref=4 hw=4 matched=2 FN=2 FP=2 FN_unsafe=0
+  [ 42/114] YouTube_FreeStockFootage_People-wearing-face-mask_Empty-Street_Covid19-D_DbgrvhlGs-720p_mp4-66_jpg.rf.72af13fb1f20520e0d41547037ced88b → ref=13 hw=7 matched=0 FN=13 FP=7 FN_unsafe=0
+  [ 43/114] airport_inside_0090_jpg.rf.663e21100a3c4bc66a41cceba5403e51 → ref=4 hw=2 matched=1 FN=3 FP=1 FN_unsafe=0
+  [ 44/114] airport_inside_0115_jpg.rf.8277ce4e71886a343bfdb10ce7fb6d4a → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [ 45/114] autox3_mp4-78_jpg.rf.dc5c00104c4cf733c2c06c820b82d338 → ref=8 hw=7 matched=4 FN=4 FP=3 FN_unsafe=0
+  [ 46/114] autox4_mp4-63_jpg.rf.b0fab4fd2c947536a122d6f2e7cca895 → ref=10 hw=6 matched=3 FN=7 FP=3 FN_unsafe=0
+  [ 47/114] autox4_mp4-72_jpg.rf.5e9c1836f027bf40eb8898e68f2efdeb → ref=8 hw=9 matched=5 FN=3 FP=4 FN_unsafe=0
+  [ 48/114] casino_0448_jpg.rf.090df4137a5926092c541ee5c6918868 → ref=1 hw=1 matched=0 FN=1 FP=1 FN_unsafe=0
+  [ 49/114] class1_077_jpg.rf.84c3583c1866262daeb1618b80e18df9 → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [ 50/114] class1_206_jpg.rf.3988ff665e55e1cd9dbcd22c87be73d9 → ref=8 hw=8 matched=0 FN=8 FP=8 FN_unsafe=0
+  [ 51/114] class1_267_jpg.rf.ab7a08d97aba5b0748e976df6e65700a → ref=8 hw=8 matched=0 FN=8 FP=8 FN_unsafe=0
+  [ 52/114] construction-1-_mp4-147_jpg.rf.a9062a80b06ac796f7afb269e5f18c53 → ref=1 hw=2 matched=1 FN=0 FP=1 FN_unsafe=0
+  [ 53/114] construction-1023-_jpg.rf.7b73352606fb1d79619d34031c07a232 → ref=3 hw=3 matched=0 FN=3 FP=3 FN_unsafe=0
+  [ 54/114] construction-1027-_jpg.rf.e78f55761814a8726ea51993407957af → ref=1 hw=1 matched=1 FN=0 FP=0 FN_unsafe=0
+  [ 55/114] construction-1037-_jpg.rf.c44151f7f28c4da9757409953b1bff55 → ref=1 hw=2 matched=1 FN=0 FP=1 FN_unsafe=0
+  [ 56/114] construction-1114-_jpg.rf.69b25d38992eb6da67701a614f0a3f97 → ref=1 hw=3 matched=1 FN=0 FP=2 FN_unsafe=0
+  [ 57/114] construction-196-_jpg.rf.f593da25134315b48b325fb42436a01a → ref=1 hw=1 matched=0 FN=1 FP=1 FN_unsafe=0
+  [ 58/114] construction-2-_mp4-149_jpg.rf.c6d3939d4743a346de668a0ae05accbc → ref=1 hw=1 matched=1 FN=0 FP=0 FN_unsafe=0
+  [ 59/114] construction-2-_mp4-38_jpg.rf.0bb63aba0a9ebe5a4741a6207e2e1902 → ref=4 hw=2 matched=0 FN=4 FP=2 FN_unsafe=0
+  [ 60/114] construction-274-_jpg.rf.21181010ffb2b9ea429080ccd258e3ae → ref=5 hw=5 matched=1 FN=4 FP=4 FN_unsafe=0
+  [ 61/114] construction-277-_jpg.rf.bf73a4edc7a1f7d412bc3267cbafcda7 → ref=1 hw=2 matched=1 FN=0 FP=1 FN_unsafe=0
+  [ 62/114] construction-3-_mp4-219_jpg.rf.416dbf917b54d5895e2430fa0d6f1b66 → ref=3 hw=5 matched=1 FN=2 FP=4 FN_unsafe=0
+  [ 63/114] construction-3-_mp4-21_jpg.rf.4fc9ff5afc8387b5c673a424781c527c → ref=4 hw=4 matched=1 FN=3 FP=3 FN_unsafe=0
+  [ 64/114] construction-4-_mp4-20_jpg.rf.cb627b855fa08d83357febb83f6ad4bc → ref=2 hw=2 matched=0 FN=2 FP=2 FN_unsafe=0
+  [ 65/114] construction-711-_jpg.rf.50a19be8c0ae3cd1a82cd543a9bb6a14 → ref=2 hw=2 matched=1 FN=1 FP=1 FN_unsafe=0
+  [ 66/114] construction-823-_jpg.rf.640d8abfc7c7689d4a19e6aa00ac8984 → ref=3 hw=5 matched=1 FN=2 FP=4 FN_unsafe=0
+  [ 67/114] construction-9-_jpg.rf.c2af6f04317b1ea7d6e2a84d776788a2 → ref=5 hw=8 matched=2 FN=3 FP=6 FN_unsafe=0
+  [ 68/114] hospital-corridor_jpg.rf.bbac7f39a08bac2b0363ee9682bd86b2 → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [ 69/114] img_08_jpg.rf.0f132a9c7ca6d12a8a9d1c4b3dbd54da → ref=4 hw=5 matched=1 FN=3 FP=4 FN_unsafe=0
+  [ 70/114] mms_00684_jpg.rf.47567bbd99db89023296aad0b965ff02 → ref=2 hw=1 matched=0 FN=2 FP=1 FN_unsafe=0
+  [ 71/114] ppe_0064_jpg.rf.f019b082d09af2750a81ef5ea3fcbc3e → ref=4 hw=7 matched=1 FN=3 FP=6 FN_unsafe=0
+  [ 72/114] ppe_0355_jpg.rf.508753d5b708536eca53de192b927c61 → ref=11 hw=11 matched=0 FN=11 FP=11 FN_unsafe=0
+  [ 73/114] ppe_0665_jpg.rf.1dad479f7f54b2a7127cf18ef74ffd85 → ref=30 hw=27 matched=5 FN=25 FP=22 FN_unsafe=0
+  [ 74/114] ppe_1228_jpg.rf.29b714c415ea74df3160f56a603463a0 → ref=4 hw=4 matched=1 FN=3 FP=3 FN_unsafe=0
+  [ 75/114] residential_jpg.rf.17181770c64333009b9101e1572c5112 → ref=7 hw=4 matched=0 FN=7 FP=4 FN_unsafe=0
+  [ 76/114] shakespearebookshop_jpg.rf.9a14dbfdd07d9a0cc916cffef0194245 → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [ 77/114] soooo_jpg.rf.5980d39f656b4d62672d2164173455e3 → ref=17 hw=13 matched=1 FN=16 FP=12 FN_unsafe=0
+  [ 78/114] video_CDC-YOUTUBE_mp4-42_jpg.rf.bbc5cf2369c54126f61f0b1f71f77d8d → ref=4 hw=5 matched=1 FN=3 FP=4 FN_unsafe=0
+  [ 79/114] youtube-118_jpg.rf.9dc8b46dfbac73d9e4f983964355d7ac → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [ 80/114] youtube-179_jpg.rf.bab3fbda351095d3b9aaba8007e3aa87 → ref=5 hw=6 matched=1 FN=4 FP=5 FN_unsafe=0
+  [ 81/114] youtube-194_jpg.rf.601da70a10e87c30c693ffbee53b17a7 → ref=3 hw=4 matched=1 FN=2 FP=3 FN_unsafe=0
+  [ 82/114] youtube-200_jpg.rf.2c8aaf9fb58df4a3af442c293217d0c5 → ref=4 hw=6 matched=1 FN=3 FP=5 FN_unsafe=0
+  [ 83/114] youtube-226_jpg.rf.dd9d045ca17155289bcebe722e8a86e9 → ref=3 hw=4 matched=0 FN=3 FP=4 FN_unsafe=0
+  [ 84/114] youtube-226_jpg.rf.e6dcacf16dc2dbcfd29f6705b7c1a224 → ref=3 hw=3 matched=0 FN=3 FP=3 FN_unsafe=0
+  [ 85/114] youtube-232_jpg.rf.f92f310106a11e01495ce8bfae0f9b5a → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [ 86/114] youtube-255_jpg.rf.c5a9f8ed208cb72e1a700ba52dc2fdfa → ref=4 hw=2 matched=0 FN=4 FP=2 FN_unsafe=0
+  [ 87/114] youtube-260_jpg.rf.76ba0c9fa66318daee5bea72b83b4cc5 → ref=18 hw=8 matched=1 FN=17 FP=7 FN_unsafe=0
+  [ 88/114] youtube-267_jpg.rf.acd9b5f407f573eaa830029418345ad3 → ref=2 hw=1 matched=0 FN=2 FP=1 FN_unsafe=0
+  [ 89/114] youtube-277_jpg.rf.1bda1581c28b4f6cccd5eda6b23b94ee → ref=8 hw=4 matched=0 FN=8 FP=4 FN_unsafe=0
+  [ 90/114] youtube-287_jpg.rf.c9a7d5b17f75d0c9ed62ad4127141aa2 → ref=3 hw=3 matched=0 FN=3 FP=3 FN_unsafe=0
+  [ 91/114] youtube-308_jpg.rf.790ae393e769f8e6280734b7506523ab → ref=6 hw=4 matched=0 FN=6 FP=4 FN_unsafe=0
+  [ 92/114] youtube-342_jpg.rf.d7e55a17800f8d87313d7b6f33256ea9 → ref=11 hw=6 matched=1 FN=10 FP=5 FN_unsafe=0
+  [ 93/114] youtube-367_jpg.rf.fab8b016cb63c0928f40849db44ee98d → ref=4 hw=3 matched=0 FN=4 FP=3 FN_unsafe=0
+  [ 94/114] youtube-391_jpg.rf.2744ad86e8dbd4366f1fa839accc48b3 → ref=4 hw=3 matched=0 FN=4 FP=3 FN_unsafe=0
+  [ 95/114] youtube-392_jpg.rf.7e49e3a8486caaa4e9d82246de93e68e → ref=2 hw=2 matched=0 FN=2 FP=2 FN_unsafe=0
+  [ 96/114] youtube-399_jpg.rf.3472ef7c01bb9092da48f0d562581121 → ref=7 hw=6 matched=0 FN=7 FP=6 FN_unsafe=0
+  [ 97/114] youtube-405_jpg.rf.6d1fc463659ac0d8e735bc1e731086a0 → ref=1 hw=1 matched=0 FN=1 FP=1 FN_unsafe=0
+  [ 98/114] youtube-416_jpg.rf.8b5d7c27337f84a1cd2b3e8b7c6435a7 → ref=2 hw=1 matched=0 FN=2 FP=1 FN_unsafe=0
+  [ 99/114] youtube-446_jpg.rf.b9d9b80538b79252761946ece0bc6317 → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [100/114] youtube-455_jpg.rf.35acd2e91608806a26f3ac4e784ea512 → ref=9 hw=11 matched=1 FN=8 FP=10 FN_unsafe=0
+  [101/114] youtube-470_jpg.rf.6aebf4cfb6c5a7e703c6532ca5090517 → ref=2 hw=2 matched=0 FN=2 FP=2 FN_unsafe=0
+  [102/114] youtube-476_jpg.rf.3744f21a7b74ea642bbcbc8251659001 → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [103/114] youtube-487_jpg.rf.5f1c67ece433c16da8ed3c9200ef4b5f → ref=3 hw=3 matched=0 FN=3 FP=3 FN_unsafe=0
+  [104/114] youtube-504_jpg.rf.23771986686856ac7d350cea84ddf611 → ref=7 hw=8 matched=0 FN=7 FP=8 FN_unsafe=0
+  [105/114] youtube-51_jpg.rf.083f4487f9a468d9ff42aa13953f377a → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [106/114] youtube-540_jpg.rf.b229e14d526db6e53965f59e6146cf15 → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [107/114] youtube-584_jpg.rf.3136186a0786384c1ffc261f4d40ea42 → ref=3 hw=3 matched=0 FN=3 FP=3 FN_unsafe=0
+  [108/114] youtube-617_jpg.rf.309ef116f1d9074886d61bb0816b6b9e → ref=7 hw=6 matched=0 FN=7 FP=6 FN_unsafe=0
+  [109/114] youtube-619_jpg.rf.93749f0e33b2f7beb302dd2e176d768a → ref=8 hw=7 matched=0 FN=8 FP=7 FN_unsafe=0
+  [110/114] youtube-697_jpg.rf.950b34f23e196850ec51a4add2eeb840 → ref=5 hw=6 matched=0 FN=5 FP=6 FN_unsafe=0
+  [111/114] youtube-70_jpg.rf.2d5f69c78f062dfc572ccb6ce6bc3c9b → ref=4 hw=4 matched=0 FN=4 FP=4 FN_unsafe=0
+  [112/114] youtube-727_jpg.rf.cb4c039b4ffea84835e67e2e3d2edf6e → ref=1 hw=1 matched=0 FN=1 FP=1 FN_unsafe=0
+  [113/114] youtube-804_jpg.rf.c4250b3c54e1cca8d58622970882f60a → ref=0 hw=0 matched=0 FN=0 FP=0 FN_unsafe=0
+  [114/114] youtube-836_jpg.rf.df6fc9e569e7b6b850ecb75c37781d10 → ref=5 hw=6 matched=2 FN=3 FP=4 FN_unsafe=0
+
+[INFO] per_image.csv 저장 완료: eval_out/per_image.csv
+[INFO] summary.json 저장 완료: eval_out/summary.json
+
+============================================================
+  [ 탐지 성능 비교 요약 ]
+============================================================
+  평가 이미지          : 114장
+  객체 수 일치 이미지   : 43.9%
+  클래스 판정 일치율    : 92.2%
+  총 FN                 : 493건  (82.72%)
+  총 FP                 : 469건  (81.99%)
+  ★ FN (미착용 관련)   : 0건  ← 안전 직결 지표
+  confidence 변화      : -0.0133 ± 0.1230
+============================================================
+
+  ✅ PASS — 안전 관련 FN 없음 (미착용 미탐지 0건)
+
+[INFO] 히스토그램 저장 완료: eval_out/confidence_histogram.png
+
+[INFO] 불일치 대표 이미지 5장 시각화:
+  -3766-_png_jpg.rf.81ead992d4b8047ec7beb28b7532cf0a: FN=42 FP=38 FN_unsafe=0 → -3766-_png_jpg.rf.81ead992d4b8047ec7beb28b7532cf0a_compare.jpg
+  ppe_0665_jpg.rf.1dad479f7f54b2a7127cf18ef74ffd85: FN=25 FP=22 FN_unsafe=0 → ppe_0665_jpg.rf.1dad479f7f54b2a7127cf18ef74ffd85_compare.jpg
+  -1989-_png_jpg.rf.8cb3d6087bb86d08e693b4250fbf96e3: FN=14 FP=14 FN_unsafe=0 → -1989-_png_jpg.rf.8cb3d6087bb86d08e693b4250fbf96e3_compare.jpg
+  soooo_jpg.rf.5980d39f656b4d62672d2164173455e3: FN=16 FP=12 FN_unsafe=0 → soooo_jpg.rf.5980d39f656b4d62672d2164173455e3_compare.jpg
+  youtube-260_jpg.rf.76ba0c9fa66318daee5bea72b83b4cc5: FN=17 FP=7 FN_unsafe=0 → youtube-260_jpg.rf.76ba0c9fa66318daee5bea72b83b4cc5_compare.jpg
+
+[INFO] 모든 결과 저장 위치: /root/jupyter_notebooks/team_prj/eval_out
+root@kria:~/jupyter_notebooks/team_prj# python sw_model7up.py \
+    --weights best.pt \
+    --image calib_out/valid_dataset/images/-1079-_png_jpg.rf.19092a3937930012f9fd9c1ce57f5a7b.jpg \
+    --mode hw_readback \
+    --hw-output-bin calib_out/hw_outputs/-1079-_png_jpg.rf.19092a3937930012f9fd9c1ce57f5a7b.bin \
+    --calib calib_params.json
+[i] HW 출력 경계(= cv2 입력) shape = (1, 256, 40, 40), |max| = 8.9146
+[i] mode = hw_readback, S_cat = 0.0553356526
+[i] HW vs SW concat 출력 차이: mean = 0.610648, max = 8.582550
+[i] int8 완전일치 25913/409600 (6.326%), ±1 이내 15.799%, 최대차 132 LSB
+Traceback (most recent call last):
+  File "/root/jupyter_notebooks/team_prj/sw_model7up.py", line 230, in <module>
+    main()
+  File "/root/jupyter_notebooks/team_prj/sw_model7up.py", line 217, in main
+    ref_det = decode(primary(ref_out), args.conf, args.iou, nc)
+  File "/root/jupyter_notebooks/team_prj/sw_model7up.py", line 149, in decode
+    from ultralytics.utils.ops import non_max_suppression
+ImportError: cannot import name 'non_max_suppression' from 'ultralytics.utils.ops' (/usr/local/share/pynq-venv/lib/python3.10/site-packages/ultralytics/utils/ops.py)
+root@kria:~/jupyter_notebooks/team_prj# python3 -c "
+import numpy as np
+
+# 팀원 파일
+team = np.fromfile('hw_output_full.bin', dtype=np.int8)
+# 우리가 새로 뽑은 파일
+ours = np.fromfile('calib_out/hw_outputs/-1079-_png_jpg.rf.19092a3937930012f9fd9c1ce57f5a7b.bin', dtype=np.int8)
+
+print(f'팀원 파일 크기: {team.size}')
+print(f'우리 파일 크기: {ours.size}')
+print(f'팀원 앞 10개: {team[:10]}')
+print(f'우리 앞 10개: {ours[:10]}')
+print(f'두 파일 일치율: {(team==ours).mean()*100:.1f}%')
+"
+팀원 파일 크기: 409600
+우리 파일 크기: 409600
+팀원 앞 10개: [-5 -3 13 -4 -5 -4 -4 -5 -2 -5]
+우리 앞 10개: [33 30 -4 54 -5 25 14 -2 -5  3]
+두 파일 일치율: 6.7%
+root@kria:~/jupyter_notebooks/team_prj# python3 -c "
+import ctypes, mmap, os, struct, json, time, sys
+import numpy as np
+from pynq import allocate
+
+IN_BYTES  = 128 * 40 * 40
+OUT_BYTES = 256 * 40 * 40
+LEN_LIMIT   = (1 << 26) - 1
+IN_PIX_BYTES, OUT_PIX_BYTES = 128, 256
+IN_CHUNK    = LEN_LIMIT // IN_PIX_BYTES  * IN_PIX_BYTES
+OUT_CHUNK   = LEN_LIMIT // OUT_PIX_BYTES * OUT_PIX_BYTES
+DMA = 0xA0050000
+MM2S_CR, MM2S_SR = 0x00, 0x04
+MM2S_SA, MM2S_SA_MSB, MM2S_LEN = 0x18, 0x1C, 0x28
+S2MM_CR, S2MM_SR = 0x30, 0x34
+S2MM_DA, S2MM_DA_MSB, S2MM_LEN2 = 0x48, 0x4C, 0x58
+DONE = 0x2 | (1 << 12)
+
+class Raw:
+    def __init__(self, base, size=0x10000):
+        self.page  = base & ~0xFFF
+        self.delta = base - self.page
+        self.fd    = os.open('/dev/mem', os.O_RDWR | os.O_SYNC)
+        self.mm    = mmap.mmap(self.fd, size + self.delta, mmap.MAP_SHARED,
+                               mmap.PROT_READ | mmap.PROT_WRITE, offset=self.page)
+        self.buf   = ctypes.c_char.from_buffer(self.mm)
+        self.addr  = ctypes.addressof(self.buf) + self.delta
+    def r(self, off): return ctypes.c_uint32.from_address(self.addr + off).value
+    def w(self, off, val): ctypes.c_uint32.from_address(self.addr + off).value = val & 0xFFFFFFFF
+
+# 팀원 입력 로드
+payload = np.fromfile('hw_input_hwc.bin', dtype=np.int8)
+print(f'입력 앞 10개: {payload[:10]}')
+
+tx_buf = allocate(shape=(IN_BYTES,),  dtype=np.int8)
+rx_buf = allocate(shape=(OUT_BYTES,), dtype=np.int8)
+tx_buf[:] = payload
+"x_buf.freebuffer()utput==team_out).mean()*100:.1f}%')int8)FFFFFF) OUT_BYTES, OUT_CHUNK)]
+입력 앞 10개: [10 17 -5  9 11 -3  5 33 13 -7]
+출력 앞 10개: [ 6 -2 11 -5 -4 -5 -5 -5 -1 -5]
+팀원 출력 앞 10개: [-5 -3 13 -4 -5 -4 -4 -5 -2 -5]
+일치율: 9.2%
+root@kria:~/jupyter_notebooks/team_prj# python3 -c "
+import ctypes, mmap, os
+
+class Raw:
+    def __init__(self, base, size=0x10000):
+        self.page  = base & ~0xFFF
+        self.delta = base - self.page
+        self.fd    = os.open('/dev/mem', os.O_RDWR | os.O_SYNC)
+        self.mm    = mmap.mmap(self.fd, size + self.delta, mmap.MAP_SHARED,
+                               mmap.PROT_READ | mmap.PROT_WRITE, offset=self.page)
+        self.buf   = ctypes.c_char.from_buffer(self.mm)
+        self.addr  = ctypes.addressof(self.buf) + self.delta
+    def r(self, off): return ctypes.c_uint32.from_address(self.addr + off).value
+
+concat = Raw(0xa0000000)
+CONCAT_OFF = {'scale0': 0x10, 'scale1': 0x18, 'scale2': 0x20,
+              'scale3': 0x28, 'output_scale': 0x30}
+
+import struct
+def bits_to_float(b):
+    return struct.unpack('<f', struct.pack('<I', b))[0]
+
+print(f'AP_CTRL: 0x{concat.r(0x00):08x}')
+for k, off in CONCAT_OFF.items():
+    v = concat.r(off)
+    print(f'  {k:13s} @0x{off:02x} = 0x{v:08x} ({bits_to_float(v):.10f})')
+"
+AP_CTRL: 0x00000081
+  scale0        @0x10 = 0x3d5b2c7b (0.0535092168)
+  scale1        @0x18 = 0x3d5b2c7b (0.0535092168)
+  scale2        @0x20 = 0x3d1e5213 (0.0386524908)
+  scale3        @0x28 = 0x3d843192 (0.0645476729)
+  output_scale  @0x30 = 0x3d62a7a3 (0.0553356521)
+root@kria:~/jupyter_notebooks/team_prj# python3 -c "
+import ctypes, mmap, os, time
+import numpy as np
+from pynq import allocate
+
+IN_BYTES  = 128 * 40 * 40
+OUT_BYTES = 256 * 40 * 40
+LEN_LIMIT   = (1 << 26) - 1
+IN_CHUNK    = LEN_LIMIT // 128 * 128
+OUT_CHUNK   = LEN_LIMIT // 256 * 256
+DMA = 0xA0050000
+MM2S_CR,MM2S_SR=0x00,0x04; MM2S_SA,MM2S_SA_MSB,MM2S_LEN=0x18,0x1C,0x28
+S2MM_CR,S2MM_SR=0x30,0x34; S2MM_DA,S2MM_DA_MSB,S2MM_LEN2=0x48,0x4C,0x58
+DONE = 0x2|(1<<12)
+
+class Raw:
+    def __init__(self, base, size=0x10000):
+        self.page=base&~0xFFF; self.delta=base-self.page
+        self.fd=os.open('/dev/mem',os.O_RDWR|os.O_SYNC)
+        self.mm=mmap.mmap(self.fd,size+self.delta,mmap.MAP_SHARED,
+                          mmap.PROT_READ|mmap.PROT_WRITE,offset=self.page)
+        self.buf=ctypes.c_char.from_buffer(self.mm)
+        self.addr=ctypes.addressof(self.buf)+self.delta
+    def r(self,off): return ctypes.c_uint32.from_address(self.addr+off).value
+    def w(self,off,val): ctypes.c_uint32.from_address(self.addr+off).value=val&0xFFFFFFFF
+
+def run_once(payload, tx_buf, rx_buf, dma):
+    tx_buf[:]=payload; rx_buf[:]=np.int8(-86)
+    tx_buf.flush(); rx_buf.flush()
+    dma.w(MM2S_CR,4); time.sleep(0.05)
+    dma.w(MM2S_CR,1); dma.w(S2MM_CR,1); time.sleep(0.02)
+    chunks_in =[(o,min(IN_CHUNK, IN_BYTES-o))  for o in range(0,IN_BYTES, IN_CHUNK)]
+    chunks_out=[(o,min(OUT_CHUNK,OUT_BYTES-o)) for o in range(0,OUT_BYTES,OUT_CHUNK)]
+    ii=oi=0; tx_busy=rx_armed=False; dl=time.monotonic()+10.0
+    while oi<len(chunks_out) and time.monotonic()<dl:
+        moved=False
+        if not rx_armed:
+"x_buf.freebuffer(); rx_buf.freebuffer()} 팀원일치율={match:.1f}%'),False,TrueFFFFF))
+실행 1: 앞10개=[ 1 -3  3 15 -5 15 -5 27 25 19] 팀원일치율=9.2%
+실행 2: 앞10개=[ 1 -3  3 15 -5 15 -5 27 25 19] 팀원일치율=9.2%
+실행 3: 앞10개=[ 1 -3  3 15 -5 15 -5 27 25 19] 팀원일치율=9.2%
+실행 4: 앞10개=[ 1 -3  3 15 -5 15 -5 27 25 19] 팀원일치율=9.2%
+실행 5: 앞10개=[ 1 -3  3 15 -5 15 -5 27 25 19] 팀원일치율=9.2%
