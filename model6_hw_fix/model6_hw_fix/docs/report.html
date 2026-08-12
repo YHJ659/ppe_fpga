@@ -1,0 +1,135 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>model.6 FPGA 수정 보고서</title>
+<style>
+  @page { size: A4; margin: 9mm 10mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Apple SD Gothic Neo", "AppleGothic", sans-serif;
+    font-size: 8.0pt; line-height: 1.36; color: #16181d; margin: 0;
+  }
+  h1 { font-size: 13pt; margin: 0 0 .6mm; letter-spacing: -.3px; }
+  .sub { color: #667; font-size: 7pt; margin-bottom: 2.2mm;
+         padding-bottom: 1.6mm; border-bottom: 1.4px solid #16181d; }
+  h2 { font-size: 8.6pt; margin: 2.4mm 0 1mm; padding-left: 1.6mm;
+       border-left: 2.5px solid #16181d; }
+  p { margin: 0 0 1mm; }
+  table { width: 100%; border-collapse: collapse; margin: .7mm 0 1.1mm; }
+  th, td { text-align: left; padding: .72mm 1.3mm; vertical-align: top;
+           border-bottom: .5px solid #d6d9e0; }
+  th { background: #f1f2f5; font-weight: 600; white-space: nowrap; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums;
+               white-space: nowrap; }
+  code, .m { font-family: "SF Mono", Menlo, monospace; font-size: 6.8pt; }
+  .box { background: #f6f7f9; border: .5px solid #d6d9e0; border-radius: 2px;
+         padding: 1.3mm 2mm; margin: 1mm 0; }
+  .ok { color: #12703a; font-weight: 600; }
+  .no { color: #a3232b; font-weight: 600; }
+  .lead { background: #eef4ff; border-left: 2.5px solid #2b5fd9;
+          padding: 1.6mm 2.4mm; margin-bottom: 1.8mm; }
+  ul { margin: .4mm 0 1mm; padding-left: 4mm; }
+  li { margin-bottom: .3mm; }
+  .two { display: flex; gap: 4mm; }
+  .two > * { flex: 1; min-width: 0; }
+  .tag { display: inline-block; background: #16181d; color: #fff;
+         border-radius: 2px; padding: 0 1.4mm; font-size: 7.2pt;
+         margin-right: 1.2mm; }
+</style>
+
+<h1>model.6 FPGA 하드웨어 검증 — 원인·수정·결과</h1>
+<div class="sub">
+  PPE 검출 YOLOv8n / KV260 (XCK26) · 구성 SW(model.0~5) + <b>HW(model.6)</b> + SW(cv2 + model.7~22) · 2026-08-08
+</div>
+
+<div class="lead">
+  <b>결론.</b> model.6이 FPGA에서 돌고, 소프트웨어 단독과 <b>같은 검출</b>을 낸다.
+  경계 텐서 y0/y1은 1600픽셀 204,800바이트 중 <b class="ok">불일치 0</b>.
+  보드 카메라로 실시간 동작(0.77 fps)까지 확인했다.
+  막고 있던 원인은 모두 규명되어 수정됐다.
+</div>
+
+<h2>1. 근본 원인</h2>
+
+<p><span class="tag">A</span><b>파라미터 메모리의 주소 규약이 어긋나 있었다 (핵심).</b>
+HLS가 <code>INTERFACE bram</code> 포트로 내보내는 주소는 <b>바이트 주소</b>인데,
+Block Memory Generator는 그것을 <b>워드 주소</b>로 읽는다. 원소가 float(4바이트)이므로
+채널 <code>c</code>의 계수를 부르면 실제로는 <code>4c</code>번 칸이 읽히고,
+주소선이 8비트라 256에서 되감긴다.</p>
+<div class="box m">읽히는 칸 = (4 × c) mod 256 &nbsp;&nbsp;→&nbsp;&nbsp; c = 0 일 때만 우연히 제자리</div>
+<ul>
+  <li>영입력(모든 값 0)으로 규칙을 세우고 <b>실제 이미지</b>로 검증 — 128/128 채널, 100.00% 재현.</li>
+  <li>Vivado가 <code>CRITICAL WARNING [BD 41-237] MASTER_TYPE ... (OTHER) vs (BRAM_CTRL)</code>으로 내내 경고하고 있었다.</li>
+  <li>8비트 가중치 BRAM은 바이트 주소 = 원소 번호라 <b>무사</b>했다. conv1x1의 곱셈·누적이 처음부터 정확했던 이유.</li>
+  <li>깊이 2인 스케일 BRAM은 <code>4·set mod 2 = 0</code>이라 항상 슬롯0을 읽어 <b>우연히</b> 맞았다.</li>
+  <li>C 시뮬레이션은 배열 인덱스로 돌기 때문에 이 층이 존재하지 않는다. 그래서 여기까지 살아남았다.</li>
+</ul>
+
+<p><span class="tag">B</span><b>PS↔PL 버스 폭이 부팅 설정에 묶여 있었다.</b>
+<code>FPD_SLCR.AFI_FS (0xFD615000)</code>는 FSBL이 부팅 때 <code>psu_init</code>으로 설정한다.
+PYNQ로 <code>.bit</code>만 바꾸면 적용되지 않아 PS는 32비트인 채로 남고, 이때
+<b>주소가 16으로 나눈 나머지 8인 레지스터 쓰기가 조용히 버려진다.</b>
+DMA의 <code>SA</code>/<code>LENGTH</code>가 바로 거기라 전송 자체가 불가능했다.
+또 <code>AFIFM2 (0xFD380000)</code>의 HP0 폭이 어긋나 DDR 쓰기가 16바이트마다 4바이트만 들어갔다.</p>
+
+<p><span class="tag">C</span><b>DMA 한 번에 보낼 수 있는 길이가 모자랐다.</b>
+<code>c_sg_length_width</code> 기본값 14 → 16,383 B. 한 프레임 출력은 409,600 B다.
+HLS 스트림에 <b>TLAST가 없어</b> 나눠 받으면 첫 조각 직후 <code>DMAIntErr</code>로 멈춘다.
+즉 나눠 받기는 원리상 불가능하고, 한 번에 받는 수밖에 없다.</p>
+
+<p><span class="tag">D</span><b>bottleneck_router가 82픽셀에서 교착했다.</b>
+스트림을 소비하는 쪽이 생산이 끝난 뒤에 도는 순차 구조라, C 시뮬레이션에서는
+<code>hls::stream</code>의 깊이가 무한이라 드러나지 않는다. DATAFLOW로 재작성했다.</p>
+
+<p><span class="tag">E</span><b>2프레임째부터 틀리는 문제가 숨어 있었다.</b>
+<code>bn_silu_128</code>의 <code>call_counter</code>는 <code>static</code>인데 설계에서 cv2가 삭제되어
+프레임당 1회만 불린다. 그래서 <b>2프레임째에 슬롯1(cv2 값)</b>을 읽는다.
+단일 프레임 시험으로는 절대 잡히지 않는 종류다.</p>
+
+<h2>2. 수정 내역</h2>
+<table>
+  <tr><th>대상</th><th>내용</th><th>파일</th></tr>
+  <tr><td>파라미터 BRAM</td><td>32비트 메모리 깊이를 <b>4배</b>로 (256→1024 등), <code>.coe</code> 값을 0·4·8… 칸에 배치</td><td class="m">hw/build_fix2.tcl:207<br>hw/coe_stride4.py</td></tr>
+  <tr><td>bn128 슬롯1</td><td>슬롯0(cv1) 값으로 덮음 — cv2가 삭제됐으므로</td><td class="m">hw/coe_stride4.py</td></tr>
+  <tr><td>DMA 길이</td><td><code>c_sg_length_width</code> 14 → <b>26</b> (67 MB). 409,600 B를 한 번에</td><td class="m">hw/build_fix2.tcl</td></tr>
+  <tr><td>PS/PL 폭</td><td>실행 시 <code>AFI_FS</code>=0xA00, <code>AFIFM2</code> HP0=32bit 교정</td><td class="m">sw/run_model6.py</td></tr>
+  <tr><td>DMA 구동</td><td>길이 한도를 레지스터에 <b>써보며 알아내지 않는다</b> — 그 쓰기가 곧 전송 시작 명령이라 쓰레기가 주입된다. 완료 판정은 Idle이 아니라 <b>IOC 비트</b>로(10.0초 → 0.05초)</td><td class="m">sw/run_model6.py</td></tr>
+  <tr><td>출력 해석</td><td>경계 배열은 <b>픽셀 우선(HWC)</b>. 인수인계 문서의 "CHW"는 오류 — 테스트벤치가 규약을 못박고 있다</td><td class="m">sw/sw_model7up.py</td></tr>
+</table>
+
+<h2>3. 검증 결과</h2>
+<div class="two">
+  <div>
+    <table>
+      <tr><th>항목</th><th class="n">결과</th></tr>
+      <tr><td>y0/y1 정수기준 일치 (1600픽셀)</td><td class="n ok">100.00%</td></tr>
+      <tr><td>불일치 바이트 / 204,800</td><td class="n ok">0</td></tr>
+      <tr><td>전체 256채널 vs float 모델</td><td class="n">상관 0.999</td></tr>
+      <tr><td>±1 이내</td><td class="n">95.6%</td></tr>
+      <tr><td>검출 재현 (6장, 90건 중)</td><td class="n ok">88건 97.8%</td></tr>
+      <tr><td>상자 IoU (최소)</td><td class="n">0.98 이상</td></tr>
+      <tr><td>12프레임 연속, 2바퀴째</td><td class="n ok">비트 동일</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th>자원 / 타이밍</th><th class="n">값</th><th class="n">여유</th></tr>
+      <tr><td>LUT</td><td class="n">69,502</td><td class="n">59.3%</td></tr>
+      <tr><td>FF</td><td class="n">135,086</td><td class="n">57.7%</td></tr>
+      <tr><td>BRAM 타일</td><td class="n">124.5</td><td class="n">86.5%</td></tr>
+      <tr><td>URAM</td><td class="n">60 / 64</td><td class="n">93.8%</td></tr>
+      <tr><td>DSP</td><td class="n">476</td><td class="n">38.1%</td></tr>
+      <tr><td>WNS</td><td class="n">+0.462 ns</td><td class="n ok">위반 0</td></tr>
+    </table>
+  </div>
+</div>
+<p>실제 카메라 검출 예 (보드, 실시간): 순수 SW <span class="m">Person 0.854 [379,314,461,526]</span> ↔
+FPGA <span class="m">Person 0.850 [379,313,460,526]</span> — 상자 동일, 신뢰도 차 0.01 이내.</p>
+
+<h2>4. 남은 것 · 팀에 확인 요청</h2>
+<table>
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td class="no">BD 원본 부재</td><td><code>.xpr</code>/<code>.bd</code>/BD tcl이 <b>어느 브랜치에도 없다</b>. 지금 쓰는 비트스트림은 <code>.hwh</code>에서 역으로 재구성한 <code>build_fix2.tcl</code> 산물이다. 원본을 버전 관리에 올려 주세요.</td></tr>
+  <tr><td class="no">동일 결함 확인</td><td>위 <b>원인 A</b>는 HLS bram 포트를 blk_mem_gen에 직접 붙이면 <b>어느 설계에서나</b> 생긴다. 팀 원본 BD에도 같은지 확인이 필요하다. 단서는 합성 로그의 <code>MASTER_TYPE ... BRAM_CTRL</code> 경고.</td></tr>
+  <tr><td>부팅 설정</td><td>PYNQ로 <code>.bit</code>만 바꾸는 방식은 PS 설정을 적용하지 않는다. 최종 배포는 XRT(<code>xmutil loadapp</code> + <code>xlnx,afi-fpga</code> 노드)로 가는 편이 구조적으로 안전하다.</td></tr>
+  <tr><td>속도</td><td>레이어별 실측 결과 <b>model.6은 전체의 6.5%</b>다. FPGA로 옮겨 아끼는 시간은 전송·양자화를 빼면 약 1.7%. <b>한 블록만 빼는 구조로는 속도가 오르지 않는다.</b> C2f 8개 합이 약 50%이며 구조가 모두 같으므로, 여러 블록을 연속으로 FPGA에 두고 중간 결과를 PS로 왕복시키지 않는 것이 유일한 방향이다.</td></tr>
+</table>
