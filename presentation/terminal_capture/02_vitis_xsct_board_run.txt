@@ -1,0 +1,41 @@
+VITIS 2022.2 / XSCT — 실제 작업 기록 기반 발췌
+DMA Loopback Software Build and KV260 Download
+
+sogang@sogang-500TGA-500SGA:~/ppe_fpga_ho$ source /tools/Xilinx/Vitis/2022.2/settings64.sh
+sogang@sogang-500TGA-500SGA:~/ppe_fpga_ho$ vitis
+
+Vitis IDE workspace:
+/home/sogang/ppe_fpga_ho/vitis_workspace
+
+[초기 빌드 문제 확인]
+fatal error: xparameters.h: No such file or directory
+compilation terminated.
+
+[플랫폼/BSP를 수정한 dma_loopback_v2 빌드]
+Invoking: ARM v8 gcc linker
+aarch64-none-elf-gcc ... -o "dma_loopback_v2.elf"
+Finished building target: dma_loopback_v2.elf
+
+   text    data     bss     dec     hex filename
+  48176    4232   22820   75228   125dc dma_loopback_v2.elf
+
+[Vitis IDE가 실행한 XSCT 보드 다운로드 순서]
+xsct -n -interactive
+xsct% connect
+xsct% targets
+xsct% fpga -file <KV260 bitstream>.bit
+xsct% loadhw -hw <KV260 hardware platform>.xsa
+xsct% rst -processor
+xsct% dow <zynqmp_fsbl.elf>
+xsct% con
+xsct% dow <dma_loopback_v2.elf>
+xsct% con
+
+Target detected: Xilinx cable / XCK26
+FPGA programming completed.
+Hardware platform loaded.
+dma_loopback_v2.elf downloaded to Cortex-A53 target.
+
+※ 위 단계까지는 실제 IDE/로그에서 확인됨.
+※ UART의 최종 DMA PASS 문자열은 현재 보관 로그에서 확인되지 않아 성공으로 표기하지 않음.
+

@@ -1,0 +1,140 @@
+FPGA BEFORE/AFTER METRICS — 2026-08-12
+Only evidence-backed values. A=direct local log/report, C=current user transcript, E=team repository.
+
+[M01][A] DMA PASSTHROUGH BD VALIDATION
+BEFORE=validate_bd_design failed: DMA address unassigned; m_axi_mm2s_aclk and smartconnect aclk issues
+AFTER=validation proceeded after clock connection and assign_bd_address
+SOURCE=vivado_6955.backup.log:334-413
+
+[M02][A] DMA PASSTHROUGH SYNTHESIS TIMING
+BEFORE/OBSERVED_SETUP=WNS +7.270 ns; TNS 0; setup failing endpoints 0
+PROBLEM_HOLD=WHS -0.082 ns; THS -353.106 ns; hold failing endpoints 10,326
+AFTER_ROUTED=WNS +5.904 ns; TNS 0; WHS +0.010 ns; THS 0
+SOURCE=vivado_6955.backup.log:1390-1393; impl_1 timing_summary_routed.rpt
+
+[M03][A] DMA PASSTHROUGH ROUTE
+INITIAL_RUN_1=failed nets 9,183; unrouted 8,206; partial 977; overlaps 0
+FINAL_RUN_1=failed 0; unrouted 0; partial 0; overlaps 0
+INITIAL_RERUN=failed 9,180; unrouted 8,213; partial 967; overlaps 0
+FINAL_RERUN=failed 0; unrouted 0; partial 0; overlaps 0
+LATEST_IMPL_RUNME_INITIAL=failed 10,142; unrouted 8,724; partial 1,418; overlaps 0
+LATEST_IMPL_RUNME_FINAL=all 0
+NOTE=initial router state is not an implementation failure by itself
+SOURCE=vivado_6955.backup.log:2749-2849,4768-4869; impl_1/runme.log:557-658
+
+[M04][A] DMA PASSTHROUGH FINAL UTILIZATION
+LUT=4,717 / 117,120 = 4.03%
+FF=7,220 / 234,240 = 3.08%
+BRAM_TILE=2 / 144 = 1.39%
+URAM=0 / 64
+DSP=0 / 1,248
+CONTROL_SETS=378 / 29,280 = 1.29%
+SOURCE=impl_1/dma_passthrough_wrapper_utilization_placed.rpt
+
+[M05][A] DMA PASSTHROUGH BLACKBOX/BITSTREAM
+BLACKBOX_FINAL=0 (no cells matched IS_BLACKBOX==1)
+BITSTREAM=write_bitstream completed successfully
+ERRORS=0; CRITICAL_WARNINGS=0 in recorded successful run
+SOURCE=vivado_6955.backup.log:1039-1041,3739-3743
+
+[M06][A] VITIS APPLICATION BUILD
+BEFORE=dma_loopback build failed: xparameters.h not found
+AFTER=dma_loopback_v2 build succeeded
+ELF_TEXT=48,176
+ELF_DATA=4,232
+ELF_BSS=22,820
+ELF_TOTAL=75,228
+SOURCE=vitis_workspace/*/Debug/build.ui.log
+
+[M07][C] CUSTOM FULL MODEL6 FINAL BUILD
+WNS=+0.220 ns
+TNS=0
+WHS=+0.010 ns
+THS=0
+FAILED_NETS=0
+UNROUTED_NETS=0
+PARTIAL_NETS=0
+NODE_OVERLAPS=0
+DRC_ERRORS=0
+BIT_SIZE=7,797,812 B
+HWH_SIZE=1,080,620 B
+XSA_SIZE=6,603,783 B
+XSA_RETURN=0
+SOURCE=current transcript; SGP1 final Tcl output
+
+[M08][C] CUSTOM BOARD OVERLAY
+BEFORE=artifact absent on selected board / wrong board confusion
+AFTER=Overlay parse; overlay.download; is_loaded=True; model6_dma base 0xA00A0000 range 0x10000
+RUNTIME_RESULT=dma object/MMIO read hung; no successful register value
+SOURCE=current transcript Jupyter output
+
+[M09][C] BOARD IDENTIFICATION
+BEFORE=192.168.1.56 unreachable/no webcam device on earlier board
+AFTER=192.168.1.253 identified; Logitech C270 046d:0825; /dev/video0 and /dev/video1
+SOURCE=current transcript
+
+[M10][E] TEAM ROUTER DEADLOCK
+BEFORE=82 pixels, repeatable 3 times and data-independent
+AFTER=1,600 pixels after DATAFLOW rewrite
+SOURCE=/tmp/ppe_fpga_main_20260812/model6_hw_fix/docs/일일보고_3일.md and README.md
+PERSONAL_CONTRIBUTION=[확인 필요]
+
+[M11][E] TEAM DMA LENGTH WIDTH
+BEFORE=c_sg_length_width 14; max 16,383 B; output 409,600 B; split receive DMAIntErr
+AFTER=width 26; about 67 MB; output received in one transfer
+RESOURCE_BEFORE=LUT 69,319; FF 134,885; BRAM 124.5; URAM 60; DSP 476
+RESOURCE_AFTER=LUT 69,502; FF 135,086; BRAM 124.5; URAM 60; DSP 476
+DELTA=LUT +183; FF +201; others 0
+TIMING_AFTER=WNS +0.462 ns; TNS 0
+SOURCE=team verification.md:133-141
+PERSONAL_CONTRIBUTION=[확인 필요]
+
+[M12][E] TEAM DMA SOFTWARE COMPLETION
+BEFORE=length probe itself started transfer; Idle-based wait 10.0 s
+AFTER=fixed constant; IOC-based completion 0.05 s
+SOURCE=team README.md:143
+PERSONAL_CONTRIBUTION=[확인 필요]
+
+[M13][E] TEAM PARAMETER/REPEATED FRAME
+BEFORE=HLS byte address vs BMG word address; static call_counter reads stale slot1 on frame 2
+AFTER=memory depth x4 and COE stride 4; slot1 duplicated from slot0
+CONTINUOUS_TEST=12 frames after one bitstream load
+SOURCE=team README.md:138-143; daily report Aug 8
+PERSONAL_CONTRIBUTION=[확인 필요]
+
+[M14][E] TEAM FEATURE ACCURACY
+Y0=corr 0.999; exact 79.4%; within ±1 99.6%; mean abs diff 0.21
+Y1=corr 0.999; exact 81.7%; within ±1 100.0%; mean abs diff 0.18
+Y2=corr 0.998; exact 61.5%; within ±1 98.2%; mean abs diff 0.41
+Y3=corr 0.998; exact 38.4%; within ±1 84.8%; mean abs diff 0.81
+ALL=corr 0.999; exact 65.2%; within ±1 95.6%; mean abs diff 0.40
+DETECTION=88/90 reproduced = 97.8%
+SOURCE=team verification.md:42-80
+PERSONAL_CONTRIBUTION=[확인 필요]
+
+[M15][E] TEAM FINAL FIX4 RESOURCE/TIMING
+LUT=69,502 / 117,120 = 59.3%
+FF=135,086 / 234,240 = 57.7%
+BRAM=124.5 / 144 = 86.5%
+URAM=60 / 64 = 93.8%
+DSP=476 / 1,248 = 38.1%
+WNS=+0.462 ns
+TNS=0
+SOURCE=team verification.md:133-141
+NOTE=cv2-removal immediate synthesis numbers 65,659/130,945/121.5/56/472 are another build; do not compare as same-step final without build mapping
+
+[M16][E] TEAM HW/SW PERFORMANCE
+SW_TOTAL_PROFILE=1.194 s
+SW_MODEL6=0.077 s = 6.5%
+FPGA_MODEL6_WITH_TRANSFER_QUANT=0.055 s
+HYBRID_TOTAL≈1.265 s = 0.79 FPS
+WEBCAM_REPORTED=0.77 FPS
+NET_TOTAL_SAVING≈1.7%
+SOURCE=team README.md and 성능_분석.md
+PERSONAL_BOARD_MEASUREMENT=not verified
+
+[M17][NOT_VERIFIED]
+CLAIMS=66,590 node overlaps; WNS -9.210 ns; LUTLP-1; off_stp/reverse/register_mode metrics
+STATUS=[확인 필요]
+SOURCE_REQUIRED=SGP1 full-model logs/reports and other Codex transcripts
+

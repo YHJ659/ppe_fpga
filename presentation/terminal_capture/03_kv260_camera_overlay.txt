@@ -1,0 +1,50 @@
+KV260 BOARD — 실제 SSH / Webcam / PYNQ 작업 기록 발췌
+
+sogang@sogang-500TGA-500SGA:~$ sudo arp-scan --interface=enp3s0 192.168.0.0/23 | grep -Ei '00:0a:35|Xilinx'
+192.168.1.57     00:0a:35:24:7b:77   Xilinx
+192.168.1.145    00:0a:35:24:7a:15   Xilinx
+192.168.1.183    00:0a:35:24:7a:3a   Xilinx
+192.168.1.253    00:0a:35:24:7a:81   Xilinx
+
+sogang@sogang-500TGA-500SGA:~$ ssh ubuntu@192.168.1.253
+ubuntu@192.168.1.253's password:
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-1027-xilinx-zynqmp aarch64)
+
+ubuntu@kria:~$ hostname
+kria
+ubuntu@kria:~$ hostname -I
+192.168.1.253
+
+ubuntu@kria:~$ lsusb
+Bus 001 Device 003: ID 046d:0825 Logitech, Inc. Webcam C270
+Bus 001 Device 002: ID 0424:2744 Microchip Technology, Inc. Hub
+
+ubuntu@kria:~$ ls -l /dev/video*
+crw-rw---- 1 root video 81, 0 Jun  5 15:40 /dev/video0
+crw-rw---- 1 root video 81, 1 Jun  5 15:40 /dev/video1
+
+ubuntu@kria:~$ sudo ss -lntp | grep 9090
+LISTEN 0 128 0.0.0.0:9090 0.0.0.0:* users:(("jupyter-noteboo",pid=1243,fd=7))
+
+Jupyter Notebook: http://192.168.1.253:9090
+
+In [1]: from pynq import Overlay
+In [2]: BIT="/home/ubuntu/work/model6_overlay/ppe_model6_icuf8_20260809.bit"
+In [3]: overlay=Overlay(BIT,download=False)
+In [4]: print(list(overlay.ip_dict.keys()))
+Out[4]: ['conv1x1_cv1_0', 'conv1x1_cv2_0', 'bn128_router_0',
+         'bottleneck_router_0', 'bn_silu_128_0', 'bn_silu_64_0',
+         'concat_channel_0', 'conv3x3_0', 'model6_dma',
+         'residual_add_0', 'zynq_ultra_ps_e_0']
+
+In [5]: overlay.download()
+In [6]: print("LOADED:",overlay.is_loaded())
+LOADED: True
+In [7]: print("MODEL6_BITSTREAM_LOADED")
+MODEL6_BITSTREAM_LOADED
+
+model6_dma base address: 0xA00A0000
+
+※ 이후 dma_mmio.read(0x00) 단계에서 Jupyter 커널이 대기 상태가 되어 재시작함.
+※ 따라서 이 기록은 비트스트림 로딩 및 IP 인식 성공까지를 보여주는 장면임.
+

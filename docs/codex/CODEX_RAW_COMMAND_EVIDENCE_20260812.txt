@@ -1,0 +1,325 @@
+CODEX RAW COMMAND EVIDENCE
+DATE: 2026-08-12
+ROOT: /home/sogang/ppe_fpga_ho
+
+VERIFICATION LABELS
+[A] command and result in direct log/journal
+[B] command present, result partial/unavailable
+[C] command/output pasted by user in current transcript
+[D] suggested, execution not verified
+[E] team-only evidence
+
+COUNTS
+VERIFIED_MANUAL_ACTION=30
+SUGGESTED_NOT_VERIFIED=8
+VIVADO_JOURNAL_RECORDS=281
+VITIS_HLS_INTERACTIVE_COMMANDS=0
+PROJECT_RELATED_SHELL_HISTORY=138
+RECOVERED_JUPYTER_LOGICAL_CELLS=8
+
+----------------------------------------------------------------
+[V01][VERIFIED_MANUAL_ACTION][B][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=bash
+TIMESTAMP=unavailable; bash history has no timestamps
+COMMANDS=vitis_hls ; find . -type f \( -name "bn_silu_64.cpp" -o -name "bn_silu_128.cpp" \) ; cat -n /home/sogang/ppe_fpga_ho/BatchNorm/bn_silu_64.cpp | grep -A 15 "void bn_silu"
+OUTPUT_EXCERPT=not stored in bash history
+SOURCE=/home/sogang/.bash_history
+SEARCH_KEYWORD=lines 1276-1281
+RESULT=HLS tool launch and source inspection confirmed; console commands unavailable
+
+[V02][VERIFIED_MANUAL_ACTION][B][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=bash
+TIMESTAMP=unavailable
+COMMANDS=find residual/split/conv3x3 source and impl/ip zip; unzip export package; grep memory size
+OUTPUT_EXCERPT=not stored
+SOURCE=/home/sogang/.bash_history
+SEARCH_KEYWORD=lines 1282-1294, 1359-1363
+RESULT=source/export inspection confirmed
+
+[V03][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+TIMESTAMP=2026-07-31 session start 08:31:53
+COMMAND=create_project ppe_dma_passthrough ... -part xck26-sfvc784-2LV-c
+OUTPUT_EXCERPT=project created; board part and IP repository subsequently configured
+SOURCE=/home/sogang/ppe_fpga_ho/vivado_6955.backup.jou
+SEARCH_KEYWORD=create_project ppe_dma_passthrough
+RESULT=success
+
+[V04][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+TIMESTAMP=2026-07-31
+COMMANDS=create_bd_design design_1; create Zynq PS, AXI DMA, axis_passthrough, proc_sys_reset and SmartConnect cells
+OUTPUT_EXCERPT=BD cells created
+SOURCE=vivado_6955.backup.jou
+SEARCH_KEYWORD=create_bd_cell
+RESULT=success
+
+[V05][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=connect DMA MM2S to axis_passthrough input and passthrough output to S2MM; connect control and HP data paths
+OUTPUT_EXCERPT=connections recorded in journal
+SOURCE=vivado_6955.backup.jou
+SEARCH_KEYWORD=connect_bd_intf_net
+RESULT=success after pin-name correction
+
+[V06][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMAND=get_bd_intf_pins axis_passthrough_0/ [newline] output_stream
+OUTPUT_EXCERPT=No interface pins matched; invalid command name "output_stream"
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=output_stream
+RESULT=failure; command split across lines
+
+[V07][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=connect_bd_net [pl_clk0]; get_bd_pinszynq_ultra_ps_e_0/pl_clk0; set clk_src ...; set clk_dst ...; connect_bd_net $clk_src $clk_dst
+OUTPUT_EXCERPT=minimum two pins required; invalid command name; later connection/already-connected diagnostics
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=get_bd_pinszynq|clk_src
+RESULT=initial failures followed by corrected clock inspection/connection
+
+[V08][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMAND=validate_bd_design
+OUTPUT_EXCERPT=DMA control address unassigned; m_axi_mm2s_aclk and smartconnect aclk issues
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=validate_bd_design
+RESULT=initial failure, then clocks/address corrected and validation repeated
+
+[V09][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=assign_bd_address; validate_bd_design; generate_target; make_wrapper
+OUTPUT_EXCERPT=design generation proceeded
+SOURCE=vivado_6955.backup.jou
+SEARCH_KEYWORD=assign_bd_address|generate_target|make_wrapper
+RESULT=success
+
+[V10][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=launch_runs synth_1; wait_on_run synth_1; open_run synth_1
+OUTPUT_EXCERPT=synthesis completed and synthesized design opened
+SOURCE=vivado_6955.backup.jou/log
+SEARCH_KEYWORD=launch_runs synth_1
+RESULT=success
+
+[V11][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMAND=get_cells -hier -filter {IS_BLACKBOX == 1}
+OUTPUT_EXCERPT=WARNING: No cells matched
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=IS_BLACKBOX
+RESULT=final synthesized DMA passthrough design blackbox count 0
+
+[V12][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=report_timing_summary; check_timing
+OUTPUT_EXCERPT=WNS +7.270 ns, TNS 0; WHS -0.082 ns, THS -353.106 ns; 10326 hold failing endpoints
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=7.270|-0.082|10326
+RESULT=synthesis setup positive but hold constraints not met
+
+[V13][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=launch_runs impl_1 -to_step route_design; wait_on_run impl_1; open_run impl_1; report_route_status
+OUTPUT_EXCERPT=route initialization failed nets 9183 (8206 unrouted, 977 partial), overlap 0; final all zero
+SOURCE=vivado_6955.backup.log and routed route-status report
+SEARCH_KEYWORD=9183|8206|977
+RESULT=route success after routing
+
+[V14][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMAND=report_timing_summary on routed design
+OUTPUT_EXCERPT=WNS +5.904 ns, TNS 0, WHS +0.010 ns, THS 0
+SOURCE=ppe_dma_passthrough timing_summary_routed report
+SEARCH_KEYWORD=5.904|0.010
+RESULT=all timing constraints met
+
+[V15][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=launch_runs impl_1 -to_step write_bitstream; wait_on_run impl_1
+OUTPUT_EXCERPT=write_bitstream completed successfully; errors 0; status Complete; progress 100%
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=write_bitstream completed successfully
+RESULT=success
+
+[V16][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMANDS=write_hw_platform; write_bd_tcl -force ...
+OUTPUT_EXCERPT=XSA/hardware platform and BD Tcl output recorded
+SOURCE=vivado_6955.backup.jou/log
+SEARCH_KEYWORD=write_hw_platform|write_bd_tcl
+RESULT=success
+
+[V17][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vivado%
+COMMAND=targets -set -filter {name == "PSU"}
+OUTPUT_EXCERPT=invalid command name "targets"
+SOURCE=vivado_6955.backup.log
+SEARCH_KEYWORD=invalid command name "targets"
+RESULT=failure; XSCT command entered in Vivado console
+
+[V18][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vitis IDE build
+TIMESTAMP=2026-07-31 15:16:45
+COMMAND=Build dma_loopback Debug
+OUTPUT_EXCERPT=fatal error: xparameters.h: No such file or directory
+SOURCE=vitis_workspace/dma_loopback/Debug/build.ui.log
+SEARCH_KEYWORD=xparameters.h
+RESULT=failure
+
+[V19][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vitis IDE build
+TIMESTAMP=2026-07-31 15:34:21
+COMMAND=Build dma_loopback_v2 Debug
+OUTPUT_EXCERPT=text 48176; data 4232; bss 22820; total 75228
+SOURCE=vitis_workspace/dma_loopback_v2/Debug/build.ui.log
+SEARCH_KEYWORD=75228
+RESULT=success
+
+[V20][VERIFIED_MANUAL_ACTION][A][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=Vitis Run/Debugger generated XSCT
+TIMESTAMP=2026-07-31 15:35:43-15:35:54
+COMMANDS=connect; targets; fpga -file; loadhw; rst; dow FSBL; con; dow dma_loopback_v2.elf; con
+OUTPUT_EXCERPT=Xilinx cable/xck26 discovered; FPGA program, XSA load and ELF downloads succeeded
+SOURCE=vitis_workspace/.metadata/.log and generated debugger Tcl
+SEARCH_KEYWORD=XSCT Command|dma_loopback_v2.elf
+RESULT=tool actions succeeded; final UART application output absent
+
+[V21][VERIFIED_MANUAL_ACTION][B][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=bash
+COMMANDS=ssh -Y -R 3121:localhost:3121 edu004@192.168.0.51; reverse tunnel variants; hw_server
+OUTPUT_EXCERPT=not retained in bash history
+SOURCE=/home/sogang/.bash_history
+SEARCH_KEYWORD=1498-1522
+RESULT=server/JTAG tunnel work confirmed, per-command outcome partial
+
+[V22][VERIFIED_MANUAL_ACTION][B][MANUAL_ACTION_FROM_LOG]
+PROMPT_TYPE=bash
+COMMAND=rsync -av ~/ppe_fpga_ho/export/ edu004@192.168.0.51:/DATA/home/edu004/workspace/ppe_fpga_ho/ip_repo_v2/
+OUTPUT_EXCERPT=not retained
+SOURCE=/home/sogang/.bash_history
+SEARCH_KEYWORD=1534
+RESULT=command execution recorded; remote contents not rechecked
+
+[V23][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=local bash then SSH
+TIMESTAMP=current transcript, exact shell timestamp unavailable
+COMMANDS=sudo arp-scan --interface=enp3s0 192.168.0.0/23 | grep -Ei '00:0a:35|Xilinx'; ssh ubuntu@192.168.1.253; hostname -I
+OUTPUT_EXCERPT=multiple Xilinx IPs; selected 192.168.1.253; hostname kria; hostname -I => 192.168.1.253
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=192.168.1.253
+RESULT=success; correct KV260 selected
+
+[V24][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=ubuntu@kria
+COMMANDS=lsusb; ls -l /dev/video*
+OUTPUT_EXCERPT=Logitech Webcam C270 ID 046d:0825; /dev/video0 and /dev/video1
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=046d:0825
+RESULT=camera detected on .253 board
+
+[V25][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=SGP1 shell and KV260 shell
+COMMANDS=scp model6 bit/hwh to ubuntu@192.168.1.56 then later model6_overlay checks; sha256sum
+OUTPUT_EXCERPT=bit 17af5790...; hwh 87d74de2...; both transferred to .56 at that stage
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=17af5790|87d74de2
+RESULT=artifact transfer/hash verified on .56 board, not proof of presence on later .253 board
+
+[V26][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=Jupyter Python cell
+COMMANDS=Path(BIT).exists(); Path(HWH).exists(); Overlay(BIT,download=False); list(overlay.ip_dict.keys())
+OUTPUT_EXCERPT=True; True; OVERLAY_PARSE_OK; model6 IP list
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=OVERLAY_PARSE_OK
+RESULT=success
+
+[V27][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=Jupyter Python cell
+COMMANDS=overlay.download(); overlay.is_loaded()
+OUTPUT_EXCERPT=True; MODEL6_BITSTREAM_LOADED
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=MODEL6_BITSTREAM_LOADED
+RESULT=success
+
+[V28][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=Jupyter Python cell
+COMMANDS=print IP address/range and register keys
+OUTPUT_EXCERPT=model6_dma 0xa00a0000 0x10000; AXI DMA register names shown
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=model6_dma 0xa00a0000
+RESULT=success
+
+[V29][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=Jupyter Python cell
+COMMANDS=dma=overlay.model6_dma; print sendchannel/recvchannel; MMIO(0xA00A0000,0x10000); dma_mmio.read(0x00)
+OUTPUT_EXCERPT=cell remained [*]; kernel was interrupted/restarted
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=dma_mmio.read
+RESULT=hang; root cause not proven
+
+[V30][VERIFIED_MANUAL_ACTION][C]
+PROMPT_TYPE=KV260 shell/Python REPL
+COMMANDS=DpuOverlay tests using normal Python, sudo system Python, PYNQ venv, Device.devices and xclbinutil PATH inspection
+OUTPUT_EXCERPT=Root permissions required; pynq_dpu module missing in system sudo Python; EmbeddedDevice found with sudo -E PYNQ venv; t.xclbin FileNotFoundError
+SOURCE=current Codex transcript
+SEARCH_KEYWORD=t.xclbin|Root permissions required
+RESULT=DPU overlay load not completed
+
+----------------------------------------------------------------
+[S01][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=Vivado%
+COMMAND=pen_run impl_1 followed by open_run impl_1
+SOURCE=user's example in current request
+RESULT=not found in local journal/history
+
+[S02][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=Vitis HLS console
+COMMANDS=open_project; set_top; open_solution; set_part; create_clock; csim_design; csynth_design; export_design
+SOURCE=current request/examples
+RESULT=no local interactive console transcript; vitis_hls.log banner only
+
+[S03][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=Vitis HLS console
+COMMANDS=off_stp, in_reverse_stp, register_mode off/reverse/forward/both experiments
+SOURCE=handoff keywords/current request
+RESULT=no local command/result evidence
+
+[S04][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=Vivado%
+COMMANDS=full model6 report_route_status/report_design_analysis/report_high_fanout_nets around 66590 overlaps and WNS -9.210
+SOURCE=handoff keywords/current request
+RESULT=source logs appear to be on inaccessible SGP1; not locally verified
+
+[S05][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=KV260 shell
+COMMAND=sudo pkill -f ipykernel_launcher
+SOURCE=Codex instruction quoted by user
+RESULT=user reported terminal/input trouble, but execution output not shown
+
+[S06][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=KV260 shell
+COMMAND=install ultralytics/torch and run YOLO
+SOURCE=current transcript discussion/download excerpt
+RESULT=dependency download began, final install/import not confirmed
+
+[S07][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=KV260/Jupyter
+COMMAND=run realtime webcam YOLO UI using final hybrid runtime
+SOURCE=current transcript goal
+RESULT=no final detection window/FPS output provided
+
+[S08][SUGGESTED_NOT_VERIFIED][D]
+PROMPT_TYPE=XSCT
+COMMANDS=manually typed connect; targets; dow; con; rst; source boot.tcl
+SOURCE=current request examples
+RESULT=IDE-generated XSCT sequence exists, but manual line-by-line XSCT input not proven
+
+UNVERIFIED SPECIAL CLAIM SEARCH
+KEYWORDS=66590|-9.210|LUTLP-1|off_stp|in_reverse_stp|register_mode|Router completed with failures
+LOCAL_RESULT=no controlling full-model log found
+REMOTE_RESULT=SGP1 BatchMode SSH denied; no password requested
+
+SECURITY
+Passwords, authentication secrets, tokens and private credentials were excluded.
+

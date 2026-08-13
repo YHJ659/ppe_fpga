@@ -1,0 +1,48 @@
+MODEL.6 FPGA BUILD — 실제 Vivado 작업 기록 발췌
+Project: PPE Monitoring AI Hardware Accelerator / KV260 / Vivado 2022.2
+
+Vivado% report_route_status -file $routed_status_report
+Vivado% report_timing_summary -file $routed_timing_report
+
+Timing Summary
+--------------
+WNS(ns)    TNS(ns)    WHS(ns)    THS(ns)
+ 0.220       0.000       0.010      0.000
+
+All user specified timing constraints are met.
+Failed Nets              : 0
+Unrouted Nets            : 0
+Partially Routed Nets    : 0
+Node Overlaps            : 0
+
+Vivado% report_drc -file $routed_drc_report
+Vivado% puts "ROUTED_DRC_ERROR_COUNT=0"
+ROUTED_DRC_ERROR_COUNT=0
+
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 667 Warnings, 85 Advisories
+INFO: [Designutils 20-2272] Running write_bitstream with 8 threads.
+Creating bitstream...
+Writing bitstream ./design_1_wrapper.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+135 Infos, 370 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+
+Vivado% puts "FINAL_IMPL_STATUS=[get_property STATUS $impl_run]"
+FINAL_IMPL_STATUS=write_bitstream Complete!
+Vivado% puts "FINAL_IMPL_PROGRESS=[get_property PROGRESS $impl_run]"
+FINAL_IMPL_PROGRESS=100%
+
+Vivado% puts "BIT_EXISTS=[file exists $bit_file]"
+BIT_EXISTS=1
+Vivado% puts "BIT_SIZE=[file size $bit_file]"
+BIT_SIZE=7797812
+
+Vivado% write_hw_platform -fixed -include_bit -force $artifact_xsa
+INFO: [Project 1-1941] Successfully created Hardware Platform:
+/DATA/home/edu004/workspace/ppe_fpga_ho/artifacts/model6_icuf8_20260809/ppe_model6_icuf8_20260809.xsa
+Vivado% puts "XSA_RETURN=$xsa_result"
+XSA_RETURN=0
+
+Vivado% write_bd_tcl -force $final_bd_backup
+INFO: [BD 5-148] Tcl file written out <design_1_model6_icuf8_bitstream_success_20260809.tcl>.
+

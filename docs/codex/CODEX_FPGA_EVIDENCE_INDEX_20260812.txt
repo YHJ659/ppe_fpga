@@ -1,0 +1,129 @@
+PPE FPGA EVIDENCE INDEX — 2026-08-12
+Local root: /home/sogang/ppe_fpga_ho
+Requested server root: /DATA/home/edu004/workspace/ppe_fpga_ho (unavailable on current host)
+
+[E001]
+파일: /home/sogang/ppe_fpga_ho/CODEX_FPGA_MASTER_HANDOFF_20260812.md
+검색 키워드: 조사 범위, 복원 한계
+내용: 이번 인수인계 결과와 확인/추정/확인 필요 분류.
+관련 주장: 설계 재실행 없이 문서만 생성.
+
+[E002]
+파일: /home/sogang/ppe_fpga_ho/AGENTS.md
+검색 키워드: 프로젝트 개요, 개발 환경, model.6, 성공 기준
+내용: KV260, Vivado/Vitis/HLS 2022.2, YOLOv8n model.6, INT8/INT32, 100MHz 목표.
+관련 주장: 기본정보, expected C2f 구조, 작업 규칙.
+
+[E003]
+파일: /home/sogang/ppe_fpga_ho/export/export_*/component.xml
+검색 키워드: busType, aximm, axis, bram, floating_point, vendor/library/name/version
+내용: 8개 exported HLS IP의 실제 AXI-Lite/AXIS/BRAM/clock/reset metadata와 OOC dependency.
+관련 주장: IP export 및 interface 존재.
+
+[E004]
+파일: /home/sogang/ppe_fpga_ho/ppe_dma_passthrough/
+검색 키워드: axi_dma, axis_passthrough, smartconnect, impl_1, timing, utilization, dma_passthrough.xsa
+내용: DMA 최소 Vivado 프로젝트의 runs, report, XSA.
+관련 주장: 2026-07-31 DMA passthrough 실습 흔적.
+
+[E005]
+파일: /home/sogang/ppe_fpga_ho/Concat/concat_channel.cpp
+파일: /home/sogang/ppe_fpga_ho/Concat/tb_concat_channel.cpp
+파일: /home/sogang/ppe_fpga_ho/Concat/concat_golden_reference.py
+파일: /home/sogang/ppe_fpga_ho/models/best.pt
+파일: /home/sogang/ppe_fpga_ho/models/yolov8n.pt
+내용: 로컬 HLS source/TB/golden/model 존재.
+관련 주장: concat 검증 자료와 YOLO weights.
+
+[E006]
+파일: /home/sogang/ppe_fpga_ho/vitis_workspace/dma_loopback*
+파일: /home/sogang/ppe_fpga_ho/vitis_workspace/ppe_dma_platform*
+내용: Vitis application/system/platform 생성 흔적.
+관련 주장: DMA loopback Vitis 실험.
+
+[E007]
+출처: 현재 Codex 대화에 사용자가 붙인 Vivado Tcl/로그 출력
+검색 키워드: FINAL_IMPL_STATUS, BIT_SIZE, XSA_RETURN, write_bitstream completed successfully
+내용: status Complete, progress100%, bit 7,797,812B, XSA return0, report copies, BD Tcl backup.
+관련 주장: 2026-08-09 SGP1 custom full build 성공.
+
+[E008]
+출처: 현재 Codex 대화의 Jupyter/PYNQ 출력
+검색 키워드: OVERLAY_PARSE_OK, MODEL6_BITSTREAM_LOADED, ip_dict, dma_mmio.read
+내용: Overlay parse/download true; custom address map; DMA/MMIO 셀 hang.
+관련 주장: overlay load 완료, DMA 실제 transfer 미완료.
+
+[E009]
+출처: 현재 Codex 대화의 ip/arp-scan/lsusb 출력
+검색 키워드: 192.168.1.253, 046d:0825, /dev/video0
+내용: 올바른 KV260와 Logitech C270/video nodes 확인.
+관련 주장: board 식별과 webcam 인식.
+
+[E010]
+출처: 현재 Codex 대화의 SGP1 artifact 생성/SCP/sha256 출력
+검색 키워드: model6_icuf8_20260809, 17af5790, 87d74de2
+내용: bit/hwh/xsa/report size와 bit/hwh SHA256.
+관련 주장: artifact 패키징 및 전송 무결성.
+
+[E011]
+파일: /tmp/ppe_fpga_main_20260812/model6_hw_fix/README.md
+검색 키워드: model.6, DMA 길이, bottleneck_router, 0.077, 0.055
+내용: known-good hardware/runtime의 문제와 수정 요약.
+관련 주장: cv1~concat boundary, DMA26, router DATAFLOW, 성능 한계.
+
+[E012]
+파일: /tmp/ppe_fpga_main_20260812/model6_hw_fix/results/verification.md
+검색 키워드: 0.999, 65.2%, 95.6%, 97.8%, 124.5, 476, +0.462
+내용: feature/detection accuracy, resource, timing, performance.
+관련 주장: 팀 final verification 수치.
+
+[E013]
+파일: /tmp/ppe_fpga_main_20260812/model6_hw_fix/docs/성능_분석.md
+검색 키워드: 1.265, 0.79 fps, 6.5%, 1.7%
+내용: stage timing과 Amdahl 병목 분석.
+관련 주장: model.6 단독 가속의 제한.
+
+[E014]
+파일: /tmp/ppe_fpga_main_20260812/model6_hw_fix/docs/일일보고_3일.md
+검색 키워드: 82픽셀, DATAFLOW, 1600픽셀, c_sg_length_width
+내용: router deadlock과 DMA partial receive 해결 과정.
+관련 주장: 실패→원인→수정→재검증.
+
+[E015]
+파일: /tmp/ppe_fpga_main_20260812/ppe_fpga_final/model6_c2f_구현_정리.md
+파일: /tmp/ppe_fpga_main_20260812/ppe_fpga_final/calib_out/model6_params.h
+검색 키워드: cv2, resource, S_IN, S_CAT, concat
+내용: 개발 버전별 구조/resource와 quantization constants.
+관련 주장: cv2 SW 이동, scale, build 간 수치 차이.
+
+[E016]
+파일: /tmp/ppe_fpga_jungwon_20260812/mixed_pipelined_pipeline_bf16_fp32pre.py
+파일: /tmp/ppe_fpga_jungwon_20260812/webcam_infer_pipelined_bf16_fp32pre.py
+파일: /tmp/ppe_fpga_jungwon_20260812/hw/hw_driver.py
+파일: /tmp/ppe_fpga_jungwon_20260812/sw/hybrid_pipeline.py
+검색 키워드: ORT INT8 PRE, NCNN, pre_stage, fpga_stage, post_stage, Model6Fpga, overlap
+내용: ORT PRE→FPGA→NCNN POST/NMS와 PRE/FPGA software pipeline.
+관련 주장: Hybrid runtime 구조.
+
+[E017 — 확인 필요]
+예상 파일: /DATA/home/edu004/workspace/ppe_fpga_ho/ppe_model6_team_latest/**/*.log,*.rpt,*.tcl
+검색 키워드: 66590, -9.210, LUTLP-1, off_stp, reverse, register_mode, high fanout, congestion, blackbox
+내용: 현재 호스트/현재 세션에서 원본을 찾지 못함.
+관련 주장: implementation 중간 실패의 정확한 순서와 수치.
+
+[E018 — 확인 필요]
+출처: 다른 Codex 세션 transcript
+검색 키워드: 과거 수정 명령, patch, 시도별 결과
+내용: 현재 세션에는 전체 과거 대화가 없음.
+관련 주장: 개인별 실제 수정/판단 이력의 완전 복원.
+
+[E019 — Git 제한]
+파일: /home/sogang/ppe_fpga_ho/.git
+실행: git status; git log; git diff
+결과: fatal: not a git repository
+관련 주장: 로컬 Git 변경/커밋/날짜 이력 복원 불가.
+
+[E020 — 파일 시간 범위]
+실행: find . -type f -newermt 2026-07-28 ! -newermt 2026-08-13 -printf ...
+결과: 07-30 1, 07-31 9626, 08-01 364, 08-02 164, 08-03 166, 08-05 1, 08-12 2 (자동생성 파일 포함).
+관련 주장: 로컬에서 확인 가능한 활동 기간과 집중일.

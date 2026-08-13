@@ -35,3 +35,25 @@ webtalk.*
 .DS_Store
 *~
 *.swp
+
+# Python / IDE
+__pycache__/
+*.py[cod]
+.vscode/
+.idea/
+
+# Vitis generated workspace data
+**/.metadata/
+**/RemoteSystemsTempFiles/
+**/Debug/
+**/Release/
+**/_ide/
+*.o
+*.d
+*.elf
+
+# Large duplicate archives
+*.zip
+
+# Keep committed verification vectors even though generic *.bin is ignored.
+!project/verification/**/*.bin
